@@ -1,15 +1,179 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
+
 <html>
 
 <head>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
-    <script src="src/index.js"></script>
-    <script>
-        test = "Speed"
-    </script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Test-Consent-Cookie</title>
 </head>
 
 <body>
+    <div id="cookieBar" class=" d-flex flex-row justify-content-center align-items-center">
+        <div class="my-2 d-flex flex-row  ">
+            <div id="message"></div>
+            <a id="privacyPolicy" target="_blank"></a>
+            <div id="and" class="mx-1"></div>
+            <a id="cookiePolicy" target="_blank"></a>
+        </div>
+        <button id="editCookie" type="button" class="btn btn-outline-primary mx-1" data-toggle="modal" data-target="#staticBackdrop"></button>
+        <button id="submitCookie" type="button" class="btn btn-outline-primary " onclick="saveCookie()"></button>
+    </div>
+    <div class="modal fade" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-8">
+                                Strictly Necessary Cookies
+                            </div>
+                            <div class="col-4">
+                                <input type="checkbox" id="strictlyCheckbox">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-8">
+                                Analytics Cookies
+                            </div>
+                            <div class="col-4">
+                                <input type="checkbox" id="analyticsCheckbox" onclick="checkedAnalytics(this);">
+                            </div>
+                        </div>
+                        <!-- <div class="row">
+                            <div class="col-8">
+                                Preference Cookies
+                            </div>
+                            <div class="col-4">
+                                <input type="checkbox" id="preferenceCheckbox">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-8">
+                                Advertising Cookies
+                            </div>
+                            <div class="col-4">
+                                <input type="checkbox" id="advertisingCheckbox">
+                            </div>
+                        </div> -->
+                    </div>
+                    <div class="container my-3">
+                        <p id="modalBodyMessage"></p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="saveAccept" type="button" class="btn btn-outline-dark  mx-1 px-2">
+                    </button>
+                    <button id="allAccept" type="button" class="btn btn-primary px-2" onclick="allAcceptClick()">
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#basicModal,#largeModal,#smallModal").modal({
+                show: false,
+                backdrop: 'static'
+            });
+        });
+        window.onload = function() {
+            cookieBar = document.getElementById("cookieBar");
+            cookieBar.style.cssText = "display:block"
+            if (readCookie('consent-cookie')) {
+                if (readCookie('consent-cookie') == "allows")
+                    cookieBar.style.cssText = 'display:none!important';
+            }
+            message = document.getElementById("message");
+            message.innerHTML = "บริษัท Test จำกัดใช้คุกกี้เพื่อให้ท่านได้รับประสบการณ์การใช้งานที่ดียิ่งขึ้น ";
+            privacyPolicy = document.getElementById("privacyPolicy");
+            privacyPolicy.innerHTML = "อ่านนโยบายการคุ้มครองข้อมูลส่วนบุคคล"
+            privacyPolicy.href = "https://nawaplastic.com/th/privacy-policy.php";
+            and = document.getElementById("and");
+            and.innerHTML = "และ"
+            cookiePolicy = document.getElementById("cookiePolicy");
+            cookiePolicy.innerHTML = "นโยบายคุกกี้"
+            cookiePolicy.href = "https://nawaplastic.com/th/privacy-policy.php";
+
+            editCookie = document.getElementById("editCookie");
+            editCookie.innerHTML = "ปรับแต่งคุกกี้"
+            submitCookie = document.getElementById("submitCookie");
+            submitCookie.innerHTML = "ยอมรับทั้งหมด"
+
+            modal = document.getElementById("myModal");
+            modelHeader = document.getElementById("staticBackdropLabel")
+            modelHeader.innerHTML = "การตั้งค่าคุกกี้"
+            modalBodyMessage = document.getElementById("modalBodyMessage")
+            modalBodyMessage.innerHTML = "ข้าพเจ้ายินยอมให้ทางบริษัทใช้ Cookies ประเภท Analytics Cookies ที่ทำหน้าที่ประเมินประสิทธิ ภาพในการทำงานแต่ละส่วนของเว็บไซต์ และการปรับปรุง ซึ่งอาจเป็นส่วนที่บริษัทดำเนินการเอง หรือ ว่าจ้างบุคคลภายนอกดำเนินการดังกล่าวให้ โดยดำเนินการภายใต้ เงื่อนไขนโยบายข้อมูลส่วนบุคคลของ บริษัท"
+            strictlyCheckbox = document.getElementById("strictlyCheckbox")
+            strictlyCheckbox.disabled = true
+            strictlyCheckbox.checked = true
+
+            saveAccept = document.getElementById("saveAccept")
+            saveAccept.innerHTML = "บันทึกการตั้งค่า"
+            allAccept = document.getElementById("allAccept")
+            allAccept.innerHTML = "ยอมรับทั้งหมด"
+        }
+
+        function checkedAnalytics(input) {
+            bufferCookie = document.cookie
+            dataCookie = {
+                analytics: input.checked
+            }
+            newCookie = " consent-cookie-preference" + '=' + JSON.stringify(dataCookie) + ";"
+            if (readCookie('consent-cookie')) {
+                bufferCookie += document.cookie + newCookie
+                document.cookie = bufferCookie
+            } else {
+                document.cookie = "consent-cookie" + "=" + "allows" + ";" + newCookie
+            }
+
+        }
+
+        function allAcceptClick() {
+            dataCookie = {
+                analytics: true,
+            }
+            newCookie = "consent-cookie-preference" + '=' + JSON.stringify(dataCookie) + ";"
+            console.log(newCookie);
+            document.cookie = "consent-cookie" + "=" + "allows" + ";" + newCookie
+            console.log(document.cookie);
+        }
+
+        function saveCookie() {
+            console.log("save cookie");
+            document.cookie = "consent-cookie" + "=" + "allows" + ";";
+            cookieBar.style.cssText = 'display:none!important';
+        }
+
+        function modelClose() {
+            console.log("modelClose");
+            document.getElementById("analyticsCheckbox").checked = false;
+        }
+
+        function readCookie(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+    </script>
 </body>
 
 </html>
