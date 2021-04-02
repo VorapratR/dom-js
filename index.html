@@ -13,7 +13,7 @@
 </head>
 
 <body>
-    <div id="cookieBar" class=" d-flex flex-row justify-content-center align-items-center">
+    <div id="cookieBar" class=" d-flex flex-row justify-content-center align-items-center py-2">
         <div class="my-2 d-flex flex-row  ">
             <div id="message"></div>
             <a id="privacyPolicy" target="_blank"></a>
@@ -23,13 +23,16 @@
         <button id="editCookie" type="button" class="btn btn-outline-primary mx-1" data-toggle="modal" data-target="#modalModifyCookie"></button>
         <button id="submitCookie" type="button" class="btn btn-primary " onclick="saveCookie()"></button>
     </div>
+    <button id="modifyModal" type="button" class="btn" data-toggle="modal" data-target="#modalModifyCookie">
+        <img src="/assets/images/cookies.png" width="50px" >
+    </button>
     <div class="modal fade" id="modalModifyCookie" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modalModifyCookieLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="modalModifyCookieLabel"></h5>
-                    <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
-                    <!-- <span aria-hidden="true">&times;</span> -->
+                    <button type="button" class="close" aria-label="Close" onclick="closeModal(this)">
+                    <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
@@ -68,7 +71,7 @@
                         </div> -->
                     </div>
                     <div class="container my-3">
-                        <p id="modalBodyMessage"></p>
+                        <div id="modalBodyMessage"></div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -82,22 +85,19 @@
     </div>
 
     <script type="text/javascript">
-        $(document).ready(function() {
-            $("#basicModal,#largeModal,#smallModal").modal({
-                show: false,
-                backdrop: 'static'
-            });
-        });
         window.onload = function() {
             checkedConsentInApp();
-            setInnerHTML();
+            setDefaultInnerHTML();
+            setDefaultHref();
+            setDefaultCheckBox();
+            setDefaultStyle();
         }
 
         function saveAcceptClick() {
-            dataCookie = {
+            let dataCookie = {
                 analytics: document.getElementById("analyticsCheckbox").checked
             }
-            newCookie = " consent-cookie-preference" + '=' + JSON.stringify(dataCookie) + ";"
+            let newCookie = " consent-cookie-preference" + '=' + JSON.stringify(dataCookie) + ";"
             if (readCookie('consent-cookie')) {
                 document.cookie = newCookie
                 console.log(document.cookie);
@@ -117,37 +117,60 @@
         }
 
         function saveCookie() {
-            document.cookie = "consent-cookie" + "=" + "allows" + ";";
-            checkedConsentInApp();
+            // document.cookie = "consent-cookie" + "=" + "allows" + ";";
+            // checkedConsentInApp();
+            document.getElementById("analyticsCheckbox").checked = true;
+            saveAcceptClick();
         }
 
-        function setInnerHTML() {
+        function checkedConsentInApp() {
+            document.getElementById("cookieBar").style.cssText = "display:block"
+            document.getElementById("modifyModal").style.cssText = 'display:none'
+            if (readCookie('consent-cookie')) {
+                if (readCookie('consent-cookie') == "allows") {
+                    document.getElementById("cookieBar").style.cssText = 'display:none!important';
+                    document.getElementById("modifyModal").style.cssText = 'display:block'
+                }
+            }
+        }
 
+        function setDefaultInnerHTML() {
             document.getElementById("message").innerHTML = "บริษัท Test จำกัดใช้คุกกี้เพื่อให้ท่านได้รับประสบการณ์การใช้งานที่ดียิ่งขึ้น ";
             document.getElementById("privacyPolicy").innerHTML = "อ่านนโยบายการคุ้มครองข้อมูลส่วนบุคคล"
-            document.getElementById("privacyPolicy").href = "https://nawaplastic.com/th/privacy-policy.php";
+
             document.getElementById("and").innerHTML = "และ"
             document.getElementById("cookiePolicy").innerHTML = "นโยบายคุกกี้"
-            document.getElementById("cookiePolicy").href = "https://nawaplastic.com/th/privacy-policy.php";
 
             document.getElementById("editCookie").innerHTML = "ปรับแต่งคุกกี้"
             document.getElementById("submitCookie").innerHTML = "ยอมรับทั้งหมด"
             document.getElementById("modalModifyCookieLabel").innerHTML = "การตั้งค่าคุกกี้"
             document.getElementById("modalBodyMessage").innerHTML = "ข้าพเจ้ายินยอมให้ทางบริษัทใช้ Cookies ประเภท Analytics Cookies ที่ทำหน้าที่ประเมินประสิทธิ ภาพในการทำงานแต่ละส่วนของเว็บไซต์ และการปรับปรุง ซึ่งอาจเป็นส่วนที่บริษัทดำเนินการเอง หรือ ว่าจ้างบุคคลภายนอกดำเนินการดังกล่าวให้ โดยดำเนินการภายใต้ เงื่อนไขนโยบายข้อมูลส่วนบุคคลของ บริษัท"
-            document.getElementById("strictlyCheckbox").disabled = true
-            document.getElementById("strictlyCheckbox").checked = true
 
             document.getElementById("saveAccept").innerHTML = "บันทึกการตั้งค่า"
             document.getElementById("allAccept").innerHTML = "ยอมรับทั้งหมด"
         }
 
-        function checkedConsentInApp() {
-            document.getElementById("cookieBar").style.cssText = "display:block"
+        function setDefaultCheckBox() {
+            document.getElementById("strictlyCheckbox").disabled = true
+            document.getElementById("strictlyCheckbox").checked = true
+        }
 
-            if (readCookie('consent-cookie')) {
-                if (readCookie('consent-cookie') == "allows")
-                    document.getElementById("cookieBar").style.cssText = 'display:none!important';
+        function setDefaultHref() {
+            document.getElementById("privacyPolicy").href = "https://nawaplastic.com/th/privacy-policy.php";
+            document.getElementById("cookiePolicy").href = "https://nawaplastic.com/th/privacy-policy.php";
+        }
+
+        function setDefaultStyle() {
+            document.getElementById("cookieBar").style.backgroundColor = "rgb(239, 239, 239)";
+        }
+
+
+
+        function closeModal() {
+            if (!readCookie("consent-cookie-preference")) {
+                document.getElementById("analyticsCheckbox").checked = false;
             }
+            $('#modalModifyCookie').modal('hide');
         }
 
         function readCookie(name) {
