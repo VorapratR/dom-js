@@ -20,17 +20,17 @@
             <div id="and" class="mx-1"></div>
             <a id="cookiePolicy" target="_blank"></a>
         </div>
-        <button id="editCookie" type="button" class="btn btn-outline-primary mx-1" data-toggle="modal" data-target="#staticBackdrop"></button>
-        <button id="submitCookie" type="button" class="btn btn-outline-primary " onclick="saveCookie()"></button>
+        <button id="editCookie" type="button" class="btn btn-outline-primary mx-1" data-toggle="modal" data-target="#modalModifyCookie"></button>
+        <button id="submitCookie" type="button" class="btn btn-primary " onclick="saveCookie()"></button>
     </div>
-    <div class="modal fade" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" id="modalModifyCookie" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modalModifyCookieLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel"></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
+                    <h5 class="modal-title" id="modalModifyCookieLabel"></h5>
+                    <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
+                    <!-- <span aria-hidden="true">&times;</span> -->
+                    </button>
                 </div>
                 <div class="modal-body">
                     <div class="container">
@@ -47,7 +47,7 @@
                                 Analytics Cookies
                             </div>
                             <div class="col-4">
-                                <input type="checkbox" id="analyticsCheckbox" onclick="checkedAnalytics(this);">
+                                <input type="checkbox" id="analyticsCheckbox">
                             </div>
                         </div>
                         <!-- <div class="row">
@@ -72,11 +72,10 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button id="saveAccept" type="button" class="btn btn-outline-dark  mx-1 px-2">
+                    <button id="saveAccept" type="button" class="btn btn-outline-dark  mx-1 px-2" onclick="saveAcceptClick()">
                     </button>
-                    <button id="allAccept" type="button" class="btn btn-primary px-2" onclick="allAcceptClick()">
+                    <button id="allAccept" type="button" class="btn btn-primary px-2" onclick="saveAllAcceptClick()">
                     </button>
-
                 </div>
             </div>
         </div>
@@ -90,77 +89,65 @@
             });
         });
         window.onload = function() {
-            cookieBar = document.getElementById("cookieBar");
-            cookieBar.style.cssText = "display:block"
-            if (readCookie('consent-cookie')) {
-                if (readCookie('consent-cookie') == "allows")
-                    cookieBar.style.cssText = 'display:none!important';
-            }
-            message = document.getElementById("message");
-            message.innerHTML = "บริษัท Test จำกัดใช้คุกกี้เพื่อให้ท่านได้รับประสบการณ์การใช้งานที่ดียิ่งขึ้น ";
-            privacyPolicy = document.getElementById("privacyPolicy");
-            privacyPolicy.innerHTML = "อ่านนโยบายการคุ้มครองข้อมูลส่วนบุคคล"
-            privacyPolicy.href = "https://nawaplastic.com/th/privacy-policy.php";
-            and = document.getElementById("and");
-            and.innerHTML = "และ"
-            cookiePolicy = document.getElementById("cookiePolicy");
-            cookiePolicy.innerHTML = "นโยบายคุกกี้"
-            cookiePolicy.href = "https://nawaplastic.com/th/privacy-policy.php";
-
-            editCookie = document.getElementById("editCookie");
-            editCookie.innerHTML = "ปรับแต่งคุกกี้"
-            submitCookie = document.getElementById("submitCookie");
-            submitCookie.innerHTML = "ยอมรับทั้งหมด"
-
-            modal = document.getElementById("myModal");
-            modelHeader = document.getElementById("staticBackdropLabel")
-            modelHeader.innerHTML = "การตั้งค่าคุกกี้"
-            modalBodyMessage = document.getElementById("modalBodyMessage")
-            modalBodyMessage.innerHTML = "ข้าพเจ้ายินยอมให้ทางบริษัทใช้ Cookies ประเภท Analytics Cookies ที่ทำหน้าที่ประเมินประสิทธิ ภาพในการทำงานแต่ละส่วนของเว็บไซต์ และการปรับปรุง ซึ่งอาจเป็นส่วนที่บริษัทดำเนินการเอง หรือ ว่าจ้างบุคคลภายนอกดำเนินการดังกล่าวให้ โดยดำเนินการภายใต้ เงื่อนไขนโยบายข้อมูลส่วนบุคคลของ บริษัท"
-            strictlyCheckbox = document.getElementById("strictlyCheckbox")
-            strictlyCheckbox.disabled = true
-            strictlyCheckbox.checked = true
-
-            saveAccept = document.getElementById("saveAccept")
-            saveAccept.innerHTML = "บันทึกการตั้งค่า"
-            allAccept = document.getElementById("allAccept")
-            allAccept.innerHTML = "ยอมรับทั้งหมด"
+            checkedConsentInApp();
+            setInnerHTML();
         }
 
-        function checkedAnalytics(input) {
-            bufferCookie = document.cookie
+        function saveAcceptClick() {
             dataCookie = {
-                analytics: input.checked
+                analytics: document.getElementById("analyticsCheckbox").checked
             }
             newCookie = " consent-cookie-preference" + '=' + JSON.stringify(dataCookie) + ";"
             if (readCookie('consent-cookie')) {
-                bufferCookie += document.cookie + newCookie
-                document.cookie = bufferCookie
+                document.cookie = newCookie
+                console.log(document.cookie);
             } else {
-                document.cookie = "consent-cookie" + "=" + "allows" + ";" + newCookie
+                document.cookie = "consent-cookie" + "=" + "allows" + ";"
+                document.cookie = newCookie
+                console.log(document.cookie);
             }
+            $('#modalModifyCookie').modal('hide');
+            checkedConsentInApp();
 
         }
 
-        function allAcceptClick() {
-            dataCookie = {
-                analytics: true,
-            }
-            newCookie = "consent-cookie-preference" + '=' + JSON.stringify(dataCookie) + ";"
-            console.log(newCookie);
-            document.cookie = "consent-cookie" + "=" + "allows" + ";" + newCookie
-            console.log(document.cookie);
+        function saveAllAcceptClick() {
+            document.getElementById("analyticsCheckbox").checked = true;
+            saveAcceptClick();
         }
 
         function saveCookie() {
-            console.log("save cookie");
             document.cookie = "consent-cookie" + "=" + "allows" + ";";
-            cookieBar.style.cssText = 'display:none!important';
+            checkedConsentInApp();
         }
 
-        function modelClose() {
-            console.log("modelClose");
-            document.getElementById("analyticsCheckbox").checked = false;
+        function setInnerHTML() {
+
+            document.getElementById("message").innerHTML = "บริษัท Test จำกัดใช้คุกกี้เพื่อให้ท่านได้รับประสบการณ์การใช้งานที่ดียิ่งขึ้น ";
+            document.getElementById("privacyPolicy").innerHTML = "อ่านนโยบายการคุ้มครองข้อมูลส่วนบุคคล"
+            document.getElementById("privacyPolicy").href = "https://nawaplastic.com/th/privacy-policy.php";
+            document.getElementById("and").innerHTML = "และ"
+            document.getElementById("cookiePolicy").innerHTML = "นโยบายคุกกี้"
+            document.getElementById("cookiePolicy").href = "https://nawaplastic.com/th/privacy-policy.php";
+
+            document.getElementById("editCookie").innerHTML = "ปรับแต่งคุกกี้"
+            document.getElementById("submitCookie").innerHTML = "ยอมรับทั้งหมด"
+            document.getElementById("modalModifyCookieLabel").innerHTML = "การตั้งค่าคุกกี้"
+            document.getElementById("modalBodyMessage").innerHTML = "ข้าพเจ้ายินยอมให้ทางบริษัทใช้ Cookies ประเภท Analytics Cookies ที่ทำหน้าที่ประเมินประสิทธิ ภาพในการทำงานแต่ละส่วนของเว็บไซต์ และการปรับปรุง ซึ่งอาจเป็นส่วนที่บริษัทดำเนินการเอง หรือ ว่าจ้างบุคคลภายนอกดำเนินการดังกล่าวให้ โดยดำเนินการภายใต้ เงื่อนไขนโยบายข้อมูลส่วนบุคคลของ บริษัท"
+            document.getElementById("strictlyCheckbox").disabled = true
+            document.getElementById("strictlyCheckbox").checked = true
+
+            document.getElementById("saveAccept").innerHTML = "บันทึกการตั้งค่า"
+            document.getElementById("allAccept").innerHTML = "ยอมรับทั้งหมด"
+        }
+
+        function checkedConsentInApp() {
+            document.getElementById("cookieBar").style.cssText = "display:block"
+
+            if (readCookie('consent-cookie')) {
+                if (readCookie('consent-cookie') == "allows")
+                    document.getElementById("cookieBar").style.cssText = 'display:none!important';
+            }
         }
 
         function readCookie(name) {
