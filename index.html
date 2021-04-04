@@ -146,16 +146,14 @@
         }
 
         function setDefaultInnerHTML() {
-            document.getElementById("messageInCookieBar").innerHTML =
-                `
+            document.getElementById("messageInCookieBar").innerHTML = `
             บริษัท Test จำกัดใช้คุกกี้เพื่อให้ท่านได้รับประสบการณ์การใช้งานที่ดียิ่งขึ้น 
             <a id="privacyPolicy" target="_blank"></a>
             <span id="and" class="ml-1">
                 <a id="cookiePolicy" target="_blank"></a>
             </span>
             `;
-            document.getElementById("privacyPolicy").innerHTML =
-                `อ่านนโยบายการคุ้มครองข้อมูลส่วนบุคคล`
+            document.getElementById("privacyPolicy").innerHTML = `อ่านนโยบายการคุ้มครองข้อมูลส่วนบุคคล`
             document.getElementById("and").innerHTML =
                 `และ  <a id="cookiePolicy" target="_blank"></a>`
             document.getElementById("cookiePolicy").innerHTML =
@@ -180,6 +178,8 @@
         }
 
         function setDefaultStyle() {
+            document.getElementById("modifyModal").style.zIndex = "5";
+            document.getElementById("cookieBar").style.zIndex = "5";
             document.getElementById("cookieBar").style.backgroundColor = "rgb(239, 239, 239)";
         }
 
