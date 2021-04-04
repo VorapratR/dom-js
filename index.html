@@ -13,15 +13,24 @@
 </head>
 
 <body>
-    <div id="cookieBar" class=" d-flex flex-row justify-content-center align-items-center py-2 fixed-bottom px-2">
-        <span id="messageInCookieBar">
-            <a id="privacyPolicy" target="_blank"></a>
-            <span id="and" class="ml-1">
-                <a id="cookiePolicy" target="_blank"></a>
-            </span>
-        </span>
-        <button id="editCookie" type="button" class="btn btn-outline-primary mx-1" data-toggle="modal" data-target="#modalModifyCookie"></button>
-        <button id="submitCookie" type="button" class="btn btn-primary " onclick="saveCookie()"></button>
+    <div id="cookieBar" class="container-fluid p-2 d-flexjustify-content-center fixed-bottom ">
+        <div class="row">
+            <div class="col-sm-8 d-flex align-items-center">
+                <span id="messageInCookieBar">
+                    <a id="privacyPolicy" target="_blank"></a>
+                    <span id="and" class="ml-1">
+                        <a id="cookiePolicy" target="_blank"></a>
+                    </span>
+                </span>
+            </div>
+            <div class="col-sm my-1 d-flex align-items-center">
+                <button id="editCookie" type="button" class="btn btn-outline-primary btn-block " data-toggle="modal" data-target="#modalModifyCookie">
+                </button>
+            </div>
+            <div class="col-sm  my-1  d-flex align-items-center">
+                <button id="submitCookie" type="button" class="btn btn-primary btn-block" onclick="saveCookie()"></button>
+            </div>
+        </div>
     </div>
 
 
