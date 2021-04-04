@@ -13,24 +13,26 @@
 </head>
 
 <body>
-    <div id="cookieBar" class=" d-flex flex-row justify-content-center align-items-center py-2">
-        <div class="my-2 d-flex flex-row  ">
-            <div id="message"></div>
+    <div id="cookieBar" class=" d-flex flex-row justify-content-center align-items-center py-2 fixed-bottom px-2">
+        <span id="messageInCookieBar">
             <a id="privacyPolicy" target="_blank"></a>
-            <div id="and" class="mx-1"></div>
-            <a id="cookiePolicy" target="_blank"></a>
-        </div>
+            <span id="and" class="ml-1">
+                <a id="cookiePolicy" target="_blank"></a>
+            </span>
+        </span>
         <button id="editCookie" type="button" class="btn btn-outline-primary mx-1" data-toggle="modal" data-target="#modalModifyCookie"></button>
         <button id="submitCookie" type="button" class="btn btn-primary " onclick="saveCookie()"></button>
     </div>
-    <button id="modifyModal" type="button" class="btn" data-toggle="modal" data-target="#modalModifyCookie">
-        <img src="/assets/images/cookies.png" width="50px" >
+
+
+    <button id="modifyModal" type="button" class="btn fixed-bottom mb-2 ml-1" data-toggle="modal" data-target="#modalModifyCookie">
+        <img src="/assets/images/cookies.png" width="30px" >
     </button>
-    <div class="modal fade" id="modalModifyCookie" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modalModifyCookieLabel" aria-hidden="true">
+    <div class="modal fade" id="modalModifyCookie" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modalModifyCookie" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalModifyCookieLabel"></h5>
+                    <h5 class="modal-title" id="modalModifyCookieTitle"></h5>
                     <button type="button" class="close" aria-label="Close" onclick="closeModal(this)">
                     <span aria-hidden="true">&times;</span>
                     </button>
@@ -41,7 +43,7 @@
                             <div class="col-8">
                                 Strictly Necessary Cookies
                             </div>
-                            <div class="col-4">
+                            <div class="col-4 text-right">
                                 <input type="checkbox" id="strictlyCheckbox">
                             </div>
                         </div>
@@ -49,7 +51,7 @@
                             <div class="col-8">
                                 Analytics Cookies
                             </div>
-                            <div class="col-4">
+                            <div class="col-4 text-right">
                                 <input type="checkbox" id="analyticsCheckbox">
                             </div>
                         </div>
@@ -135,15 +137,23 @@
         }
 
         function setDefaultInnerHTML() {
-            document.getElementById("message").innerHTML = "บริษัท Test จำกัดใช้คุกกี้เพื่อให้ท่านได้รับประสบการณ์การใช้งานที่ดียิ่งขึ้น ";
-            document.getElementById("privacyPolicy").innerHTML = "อ่านนโยบายการคุ้มครองข้อมูลส่วนบุคคล"
-
-            document.getElementById("and").innerHTML = "และ"
-            document.getElementById("cookiePolicy").innerHTML = "นโยบายคุกกี้"
-
+            document.getElementById("messageInCookieBar").innerHTML =
+                `
+            บริษัท Test จำกัดใช้คุกกี้เพื่อให้ท่านได้รับประสบการณ์การใช้งานที่ดียิ่งขึ้น 
+            <a id="privacyPolicy" target="_blank"></a>
+            <span id="and" class="ml-1">
+                <a id="cookiePolicy" target="_blank"></a>
+            </span>
+            `;
+            document.getElementById("privacyPolicy").innerHTML =
+                `อ่านนโยบายการคุ้มครองข้อมูลส่วนบุคคล`
+            document.getElementById("and").innerHTML =
+                `และ  <a id="cookiePolicy" target="_blank"></a>`
+            document.getElementById("cookiePolicy").innerHTML =
+                "นโยบายคุกกี้"
             document.getElementById("editCookie").innerHTML = "ปรับแต่งคุกกี้"
             document.getElementById("submitCookie").innerHTML = "ยอมรับทั้งหมด"
-            document.getElementById("modalModifyCookieLabel").innerHTML = "การตั้งค่าคุกกี้"
+            document.getElementById("modalModifyCookieTitle").innerHTML = "การตั้งค่าคุกกี้"
             document.getElementById("modalBodyMessage").innerHTML = "ข้าพเจ้ายินยอมให้ทางบริษัทใช้ Cookies ประเภท Analytics Cookies ที่ทำหน้าที่ประเมินประสิทธิ ภาพในการทำงานแต่ละส่วนของเว็บไซต์ และการปรับปรุง ซึ่งอาจเป็นส่วนที่บริษัทดำเนินการเอง หรือ ว่าจ้างบุคคลภายนอกดำเนินการดังกล่าวให้ โดยดำเนินการภายใต้ เงื่อนไขนโยบายข้อมูลส่วนบุคคลของ บริษัท"
 
             document.getElementById("saveAccept").innerHTML = "บันทึกการตั้งค่า"
