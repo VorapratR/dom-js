@@ -8,7 +8,15 @@ window.onload = function() {
 }
 
 function writeHTML() {
+    let data = CONSENTCOOKIE.getArgs();
     let scr = document.getElementById('syndication');
+
+    let scriptGA = document.createElement('script');
+    document.setAttribute("async");
+    document.setAttribute("src", `https://www.googletagmanager.com/gtag/js?id=${data.propertyID}`);
+
+    scr.appendChild(scriptGA, scr);
+
     // cookie bar start
     let cookieBar = document.createElement('div');
     cookieBar.id = "cookieBar";
@@ -18,7 +26,7 @@ function writeHTML() {
     cookieBarRow.className = "row";
 
     let cookieBarColTitle = document.createElement('div');
-    cookieBarColTitle.className = "col-sm-8 d-flex align-items-center";
+    cookieBarColTitle.className = "col-lg-8 col-md-12 d-flex align-items-center";
     let messageInCookieBar = document.createElement('span');
     messageInCookieBar.id = "messageInCookieBar";
     let privacyPolicyTitle = document.createElement('a');
@@ -37,7 +45,7 @@ function writeHTML() {
     cookieBarColTitle.appendChild(messageInCookieBar);
 
     let cookieBarColEdit = document.createElement('div');
-    cookieBarColEdit.className = "col-sm my-1 d-flex align-items-center";
+    cookieBarColEdit.className = "col-md my-1 d-flex align-items-center";
     let editCookie = document.createElement('button');
     editCookie.id = "editCookie";
     editCookie.className = "btn btn-outline-primary btn-block";
@@ -48,7 +56,7 @@ function writeHTML() {
     cookieBarColEdit.appendChild(editCookie);
 
     let cookieBarColSubmit = document.createElement('div');
-    cookieBarColSubmit.className = "col-sm  my-1  d-flex align-items-center";
+    cookieBarColSubmit.className = "col-md my-1  d-flex align-items-center";
     let submitCookie = document.createElement('button');
     submitCookie.id = "submitCookie";
     submitCookie.className = "btn btn-primary btn-block";
@@ -73,6 +81,7 @@ function writeHTML() {
     modifyModal.setAttribute("data-toggle", "modal");
     modifyModal.setAttribute("data-target", "#modalModifyCookie");
     let imgCookie = document.createElement('img');
+    imgCookie.className = "fixed-bottom m-2";
     imgCookie.setAttribute("src", "https://cdn.jsdelivr.net/gh/VorapratR/dom-js@main/assets/images/cookies.png");
     imgCookie.setAttribute("width", "30px");
 
@@ -229,7 +238,7 @@ function checkedConsentInApp() {
     if (readCookie('consent-cookie')) {
         if (readCookie('consent-cookie') == "allows") {
             document.getElementById("cookieBar").style.cssText = 'display:none!important';
-            document.getElementById("modifyModal").style.cssText = 'display:block';
+            document.getElementById("modifyModal").style.cssText = 'display:inline';
         }
     }
 
@@ -238,6 +247,7 @@ function checkedConsentInApp() {
         consentCookiePreference = JSON.parse(consentCookiePreference);
         let data = CONSENTCOOKIE.getArgs();
         if (consentCookiePreference.analytics) {
+            window[`ga-disable-${data.propertyID}`] = false;
             addAnalytics(data.propertyID);
         } else {
             window[`ga-disable-${data.propertyID}`] = true;
