@@ -1,191 +1,194 @@
-let scr = document.getElementById('syndication');
-// cookie bar start
-let cookieBar = document.createElement('div');
-cookieBar.id = "cookieBar";
-cookieBar.className = "container-fluid p-2 d-flexjustify-content-center fixed-bottom";
-
-let cookieBarRow = document.createElement('div');
-cookieBarRow.className = "row";
-
-let cookieBarColTitle = document.createElement('div');
-cookieBarColTitle.className = "col-sm-8 d-flex align-items-center";
-let messageInCookieBar = document.createElement('span');
-messageInCookieBar.id = "messageInCookieBar";
-let privacyPolicyTitle = document.createElement('a');
-privacyPolicyTitle.id = "privacyPolicy";
-privacyPolicyTitle.setAttribute("target", "_blank");
-let andTitle = document.createElement('span');
-andTitle.id = "and";
-andTitle.className = "ml-1";
-let cookiePolicyTitle = document.createElement('a');
-cookiePolicyTitle.id = "cookiePolicy";
-cookiePolicyTitle.setAttribute("target", "_blank");
-
-andTitle.appendChild(cookiePolicyTitle);
-messageInCookieBar.appendChild(privacyPolicyTitle);
-messageInCookieBar.appendChild(andTitle);
-cookieBarColTitle.appendChild(messageInCookieBar);
-
-let cookieBarColEdit = document.createElement('div');
-cookieBarColEdit.className = "col-sm my-1 d-flex align-items-center";
-let editCookie = document.createElement('button');
-editCookie.id = "editCookie";
-editCookie.className = "btn btn-outline-primary btn-block";
-editCookie.setAttribute("type", "button");
-editCookie.setAttribute("data-toggle", "modal");
-editCookie.setAttribute("data-target", "#modalModifyCookie");
-
-cookieBarColEdit.appendChild(editCookie);
-
-let cookieBarColSubmit = document.createElement('div');
-cookieBarColSubmit.className = "col-sm  my-1  d-flex align-items-center";
-let submitCookie = document.createElement('button');
-submitCookie.id = "submitCookie";
-submitCookie.className = "btn btn-primary btn-block";
-submitCookie.setAttribute("type", "button");
-submitCookie.setAttribute("onclick", "saveCookie()")
-
-cookieBarColSubmit.appendChild(submitCookie);
-
-cookieBarRow.appendChild(cookieBarColTitle);
-cookieBarRow.appendChild(cookieBarColEdit);
-cookieBarRow.appendChild(cookieBarColSubmit);
-
-cookieBar.appendChild(cookieBarRow);
-scr.parentNode.insertBefore(cookieBar, scr);
-// cookie bar end
-
-// modifyModal start
-let modifyModal = document.createElement('button');
-modifyModal.id = "modifyModal";
-modifyModal.className = "btn fixed-bottom mb-2 ml-1";
-modifyModal.setAttribute("type", "button");
-modifyModal.setAttribute("data-toggle", "modal");
-modifyModal.setAttribute("data-target", "#modalModifyCookie");
-let imgCookie = document.createElement('img');
-imgCookie.setAttribute("src", "/assets/images/cookies.png");
-imgCookie.setAttribute("width", "30px");
-
-modifyModal.appendChild(imgCookie);
-scr.parentNode.insertBefore(modifyModal, scr);
-// modifyModal end
-
-// cookie modal start
-let modalModifyCookie = document.createElement('div');
-modalModifyCookie.id = "modalModifyCookie";
-modalModifyCookie.className = "modal fade";
-modalModifyCookie.setAttribute("data-backdrop", "static");
-modalModifyCookie.setAttribute("tabindex", "-1");
-modalModifyCookie.setAttribute("role", "dialog");
-modalModifyCookie.setAttribute("aria-labelledby", "modalModifyCookie");
-modalModifyCookie.setAttribute("aria-hidden", "true");
-
-let modalDialog = document.createElement('div');
-modalDialog.className = "modal-dialog";
-modalDialog.setAttribute("role", "document");
-
-let modalContent = document.createElement('div');
-modalContent.className = "modal-content";
-
-let modalHeader = document.createElement('div');
-modalHeader.className = "modal-header";
-
-let modalModifyCookieTitle = document.createElement('h5');
-modalModifyCookieTitle.id = "modalModifyCookieTitle";
-modalModifyCookieTitle.className = "modal-title";
-let closeBtn = document.createElement('button');
-closeBtn.className = "close";
-closeBtn.setAttribute('type', "button");
-closeBtn.setAttribute('aria-label', 'Close');
-closeBtn.setAttribute('onclick', "closeModal()")
-let spanClose = document.createElement('span');
-spanClose.id = "closeIcon";
-spanClose.setAttribute("aria-hidden", "true");
-
-closeBtn.appendChild(spanClose);
-modalHeader.appendChild(modalModifyCookieTitle);
-modalHeader.appendChild(closeBtn);
-
-let modalBody = document.createElement('div');
-modalBody.className = "modal-body";
-let modalBodyContainer = document.createElement('div');
-modalBodyContainer.className = "container";
-
-let modalBodyRowStrictly = document.createElement('div');
-modalBodyRowStrictly.className = "row";
-let modalStrictlyTitle = document.createElement('div');
-modalStrictlyTitle.className = "col-8";
-modalStrictlyTitle.appendChild(document.createTextNode("Strictly Necessary Cookies"));
-let modalColStrictly = document.createElement('div');
-modalColStrictly.className = "col-4 text-right";
-let strictlyCheckbox = document.createElement('input');
-strictlyCheckbox.id = "strictlyCheckbox";
-strictlyCheckbox.setAttribute("type", "checkbox");
-
-modalColStrictly.appendChild(strictlyCheckbox);
-modalBodyRowStrictly.appendChild(modalStrictlyTitle);
-modalBodyRowStrictly.appendChild(modalColStrictly);
-
-let modalBodyRowAnalytics = document.createElement('div');
-modalBodyRowAnalytics.className = "row";
-let modalAnalyticsTitle = document.createElement('div');
-modalAnalyticsTitle.className = "col-8";
-modalAnalyticsTitle.appendChild(document.createTextNode("Analytics Cookies"));
-let modalColAnalytics = document.createElement('div');
-modalColAnalytics.className = "col-4 text-right";
-let analyticsCheckbox = document.createElement('input');
-analyticsCheckbox.id = "analyticsCheckbox";
-analyticsCheckbox.setAttribute("type", "checkbox");
-
-modalColAnalytics.appendChild(analyticsCheckbox);
-modalBodyRowAnalytics.appendChild(modalAnalyticsTitle);
-modalBodyRowAnalytics.appendChild(modalColAnalytics);
-
-modalBodyContainer.appendChild(modalBodyRowStrictly);
-modalBodyContainer.appendChild(modalBodyRowAnalytics);
-
-let modalBodyContainerMessage = document.createElement('div');
-modalBodyContainerMessage.className = "container my-3";
-let modalBodyMessage = document.createElement('div');
-modalBodyMessage.id = "modalBodyMessage";
-
-modalBodyContainerMessage.appendChild(modalBodyMessage);
-
-modalBody.appendChild(modalBodyContainer);
-modalBody.appendChild(modalBodyContainerMessage);
-
-let modalFooter = document.createElement('div');
-modalFooter.className = "modal-footer";
-let saveAccept = document.createElement('button');
-saveAccept.id = "saveAccept";
-saveAccept.className = "btn btn-outline-dark mx-1 px-2";
-saveAccept.setAttribute("type", "button");
-saveAccept.setAttribute('onclick', "saveAcceptClick()")
-let allAccept = document.createElement('button');
-allAccept.id = "allAccept";
-allAccept.className = "btn btn-primary px-2";
-allAccept.setAttribute("type", "button");
-allAccept.setAttribute('onclick', "saveAllAcceptClick()")
-
-modalFooter.appendChild(saveAccept);
-modalFooter.appendChild(allAccept);
-
-modalContent.appendChild(modalHeader);
-modalContent.appendChild(modalBody);
-modalContent.appendChild(modalFooter);
-
-modalDialog.appendChild(modalContent);
-modalModifyCookie.appendChild(modalDialog);
-
-scr.parentNode.insertBefore(modalModifyCookie, scr);
-// cookie modal end
-
 window.onload = function() {
+    writeHTML();
     checkedConsentInApp();
     setDefaultInnerHTML();
     setDefaultHref();
     setDefaultCheckBox();
     setDefaultStyle();
+}
+
+function writeHTML() {
+    let scr = document.getElementById('syndication');
+    // cookie bar start
+    let cookieBar = document.createElement('div');
+    cookieBar.id = "cookieBar";
+    cookieBar.className = "container-fluid p-2 d-flexjustify-content-center fixed-bottom";
+
+    let cookieBarRow = document.createElement('div');
+    cookieBarRow.className = "row";
+
+    let cookieBarColTitle = document.createElement('div');
+    cookieBarColTitle.className = "col-sm-8 d-flex align-items-center";
+    let messageInCookieBar = document.createElement('span');
+    messageInCookieBar.id = "messageInCookieBar";
+    let privacyPolicyTitle = document.createElement('a');
+    privacyPolicyTitle.id = "privacyPolicy";
+    privacyPolicyTitle.setAttribute("target", "_blank");
+    let andTitle = document.createElement('span');
+    andTitle.id = "and";
+    andTitle.className = "ml-1";
+    let cookiePolicyTitle = document.createElement('a');
+    cookiePolicyTitle.id = "cookiePolicy";
+    cookiePolicyTitle.setAttribute("target", "_blank");
+
+    andTitle.appendChild(cookiePolicyTitle);
+    messageInCookieBar.appendChild(privacyPolicyTitle);
+    messageInCookieBar.appendChild(andTitle);
+    cookieBarColTitle.appendChild(messageInCookieBar);
+
+    let cookieBarColEdit = document.createElement('div');
+    cookieBarColEdit.className = "col-sm my-1 d-flex align-items-center";
+    let editCookie = document.createElement('button');
+    editCookie.id = "editCookie";
+    editCookie.className = "btn btn-outline-primary btn-block";
+    editCookie.setAttribute("type", "button");
+    editCookie.setAttribute("data-toggle", "modal");
+    editCookie.setAttribute("data-target", "#modalModifyCookie");
+
+    cookieBarColEdit.appendChild(editCookie);
+
+    let cookieBarColSubmit = document.createElement('div');
+    cookieBarColSubmit.className = "col-sm  my-1  d-flex align-items-center";
+    let submitCookie = document.createElement('button');
+    submitCookie.id = "submitCookie";
+    submitCookie.className = "btn btn-primary btn-block";
+    submitCookie.setAttribute("type", "button");
+    submitCookie.setAttribute("onclick", "saveCookie()")
+
+    cookieBarColSubmit.appendChild(submitCookie);
+
+    cookieBarRow.appendChild(cookieBarColTitle);
+    cookieBarRow.appendChild(cookieBarColEdit);
+    cookieBarRow.appendChild(cookieBarColSubmit);
+
+    cookieBar.appendChild(cookieBarRow);
+    scr.parentNode.insertBefore(cookieBar, scr);
+    // cookie bar end
+
+    // modifyModal start
+    let modifyModal = document.createElement('button');
+    modifyModal.id = "modifyModal";
+    modifyModal.className = "btn btn-light fixed-bottom mb-2 ml-1 ";
+    modifyModal.setAttribute("type", "button");
+    modifyModal.setAttribute("data-toggle", "modal");
+    modifyModal.setAttribute("data-target", "#modalModifyCookie");
+    let imgCookie = document.createElement('img');
+    imgCookie.setAttribute("src", "/assets/images/cookies.png");
+    imgCookie.setAttribute("width", "30px");
+
+    modifyModal.appendChild(imgCookie);
+    scr.parentNode.insertBefore(modifyModal, scr);
+    // modifyModal end
+
+    // cookie modal start
+    let modalModifyCookie = document.createElement('div');
+    modalModifyCookie.id = "modalModifyCookie";
+    modalModifyCookie.className = "modal fade";
+    modalModifyCookie.setAttribute("data-backdrop", "static");
+    modalModifyCookie.setAttribute("tabindex", "-1");
+    modalModifyCookie.setAttribute("role", "dialog");
+    modalModifyCookie.setAttribute("aria-labelledby", "modalModifyCookie");
+    modalModifyCookie.setAttribute("aria-hidden", "true");
+
+    let modalDialog = document.createElement('div');
+    modalDialog.className = "modal-dialog";
+    modalDialog.setAttribute("role", "document");
+
+    let modalContent = document.createElement('div');
+    modalContent.className = "modal-content";
+
+    let modalHeader = document.createElement('div');
+    modalHeader.className = "modal-header";
+
+    let modalModifyCookieTitle = document.createElement('h5');
+    modalModifyCookieTitle.id = "modalModifyCookieTitle";
+    modalModifyCookieTitle.className = "modal-title";
+    let closeBtn = document.createElement('button');
+    closeBtn.className = "close";
+    closeBtn.setAttribute('type', "button");
+    closeBtn.setAttribute('aria-label', 'Close');
+    closeBtn.setAttribute('onclick', "closeModal()")
+    let spanClose = document.createElement('span');
+    spanClose.id = "closeIcon";
+    spanClose.setAttribute("aria-hidden", "true");
+
+    closeBtn.appendChild(spanClose);
+    modalHeader.appendChild(modalModifyCookieTitle);
+    modalHeader.appendChild(closeBtn);
+
+    let modalBody = document.createElement('div');
+    modalBody.className = "modal-body";
+    let modalBodyContainer = document.createElement('div');
+    modalBodyContainer.className = "container";
+
+    let modalBodyRowStrictly = document.createElement('div');
+    modalBodyRowStrictly.className = "row";
+    let modalStrictlyTitle = document.createElement('div');
+    modalStrictlyTitle.className = "col-8";
+    modalStrictlyTitle.appendChild(document.createTextNode("Strictly Necessary Cookies"));
+    let modalColStrictly = document.createElement('div');
+    modalColStrictly.className = "col-4 text-right";
+    let strictlyCheckbox = document.createElement('input');
+    strictlyCheckbox.id = "strictlyCheckbox";
+    strictlyCheckbox.setAttribute("type", "checkbox");
+
+    modalColStrictly.appendChild(strictlyCheckbox);
+    modalBodyRowStrictly.appendChild(modalStrictlyTitle);
+    modalBodyRowStrictly.appendChild(modalColStrictly);
+
+    let modalBodyRowAnalytics = document.createElement('div');
+    modalBodyRowAnalytics.className = "row";
+    let modalAnalyticsTitle = document.createElement('div');
+    modalAnalyticsTitle.className = "col-8";
+    modalAnalyticsTitle.appendChild(document.createTextNode("Analytics Cookies"));
+    let modalColAnalytics = document.createElement('div');
+    modalColAnalytics.className = "col-4 text-right";
+    let analyticsCheckbox = document.createElement('input');
+    analyticsCheckbox.id = "analyticsCheckbox";
+    analyticsCheckbox.setAttribute("type", "checkbox");
+
+    modalColAnalytics.appendChild(analyticsCheckbox);
+    modalBodyRowAnalytics.appendChild(modalAnalyticsTitle);
+    modalBodyRowAnalytics.appendChild(modalColAnalytics);
+
+    modalBodyContainer.appendChild(modalBodyRowStrictly);
+    modalBodyContainer.appendChild(modalBodyRowAnalytics);
+
+    let modalBodyContainerMessage = document.createElement('div');
+    modalBodyContainerMessage.className = "container my-3";
+    let modalBodyMessage = document.createElement('div');
+    modalBodyMessage.id = "modalBodyMessage";
+
+    modalBodyContainerMessage.appendChild(modalBodyMessage);
+
+    modalBody.appendChild(modalBodyContainer);
+    modalBody.appendChild(modalBodyContainerMessage);
+
+    let modalFooter = document.createElement('div');
+    modalFooter.className = "modal-footer";
+    let saveAccept = document.createElement('button');
+    saveAccept.id = "saveAccept";
+    saveAccept.className = "btn btn-outline-dark mx-1 px-2";
+    saveAccept.setAttribute("type", "button");
+    saveAccept.setAttribute('onclick', "saveAcceptClick()")
+    let allAccept = document.createElement('button');
+    allAccept.id = "allAccept";
+    allAccept.className = "btn btn-primary px-2";
+    allAccept.setAttribute("type", "button");
+    allAccept.setAttribute('onclick', "saveAllAcceptClick()")
+
+    modalFooter.appendChild(saveAccept);
+    modalFooter.appendChild(allAccept);
+
+    modalContent.appendChild(modalHeader);
+    modalContent.appendChild(modalBody);
+    modalContent.appendChild(modalFooter);
+
+    modalDialog.appendChild(modalContent);
+    modalModifyCookie.appendChild(modalDialog);
+
+    scr.parentNode.insertBefore(modalModifyCookie, scr);
+    // cookie modal end
 }
 
 function saveAcceptClick() {
@@ -221,14 +224,35 @@ function saveCookie() {
 
 function checkedConsentInApp() {
     console.log('checkedConsentInApp');
-    document.getElementById("cookieBar").style.cssText = "display:block"
-    document.getElementById("modifyModal").style.cssText = 'display:none'
+    document.getElementById("cookieBar").style.cssText = "display:block";
+    document.getElementById("modifyModal").style.cssText = 'display:none';
     if (readCookie('consent-cookie')) {
         if (readCookie('consent-cookie') == "allows") {
             document.getElementById("cookieBar").style.cssText = 'display:none!important';
-            document.getElementById("modifyModal").style.cssText = 'display:block'
+            document.getElementById("modifyModal").style.cssText = 'display:block';
         }
     }
+
+    if (readCookie('consent-cookie-preference')) {
+        let consentCookiePreference = JSON.parse(readCookie('consent-cookie-preference'));
+        if (consentCookiePreference.analytics) {
+            addAnalytics();
+        }
+    }
+
+}
+
+function addAnalytics() {
+    console.log('addAnalytics');
+    let data = CONSENTCOOKIE.getArgs();
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+    gtag('config', data.propertyID);
 }
 
 function setDefaultInnerHTML() {
@@ -241,14 +265,14 @@ function setDefaultInnerHTML() {
         <a id="cookiePolicy" target="_blank"></a>
     </span>
     `;
-    document.getElementById("privacyPolicy").innerHTML = `${dataText.privacyPolicyText}`
+    document.getElementById("privacyPolicy").innerHTML = `${dataText.privacyPolicyText}`;
     document.getElementById("and").innerHTML =
-        `${dataText.andText} <a id="cookiePolicy" target="_blank"></a>`
-    document.getElementById("cookiePolicy").innerHTML = `${dataText.cookiePolicyText}`
+        `${dataText.andText} <a id="cookiePolicy" target="_blank"></a>`;
+    document.getElementById("cookiePolicy").innerHTML = `${dataText.cookiePolicyText}`;
     document.getElementById("editCookie").innerHTML = dataText.editCookieText;
     document.getElementById("submitCookie").innerHTML = dataText.submitCookieText;
     document.getElementById("modalModifyCookieTitle").innerHTML = dataText.modalModifyCookieTitleText;
-    document.getElementById("modalBodyMessage").innerHTML = dataText.modalBodyMessageText
+    document.getElementById("modalBodyMessage").innerHTML = dataText.modalBodyMessageText;
 
     document.getElementById("saveAccept").innerHTML = dataText.saveAcceptText;
     document.getElementById("allAccept").innerHTML = dataText.allAcceptText;
@@ -257,8 +281,8 @@ function setDefaultInnerHTML() {
 }
 
 function setDefaultCheckBox() {
-    document.getElementById("strictlyCheckbox").disabled = true
-    document.getElementById("strictlyCheckbox").checked = true
+    document.getElementById("strictlyCheckbox").disabled = true;
+    document.getElementById("strictlyCheckbox").checked = true;
 }
 
 function setDefaultHref() {

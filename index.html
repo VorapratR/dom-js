@@ -34,7 +34,7 @@
     </div>
 
 
-    <button id="modifyModal" type="button" class="btn fixed-bottom mb-2 ml-1" data-toggle="modal" data-target="#modalModifyCookie">
+    <button id="modifyModal" type="button" class="btn btn-light fixed-bottom mb-2 ml-1" data-toggle="modal" data-target="#modalModifyCookie">
         <img src="/assets/images/cookies.png" width="30px" >
     </button>
     <div class="modal fade" id="modalModifyCookie" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modalModifyCookie" aria-hidden="true">
@@ -183,14 +183,23 @@
             document.getElementById("cookieBar").style.backgroundColor = "rgb(239, 239, 239)";
         }
 
-
-
         function closeModal() {
             if (!readCookie("consent-cookie-preference")) {
                 document.getElementById("analyticsCheckbox").checked = false;
             }
             $('#modalModifyCookie').modal('hide');
         }
+
+        // function addAnalytics() {
+        //     window.dataLayer = window.dataLayer || [];
+
+        //     function gtag() {
+        //         dataLayer.push(arguments);
+        //     }
+
+        //     gtag('js', new Date());
+        //     gtag('config', propertyID);
+        // }
 
         function readCookie(name) {
             var nameEQ = name + "=";
