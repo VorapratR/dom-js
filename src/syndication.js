@@ -73,7 +73,7 @@ function writeHTML() {
     modifyModal.setAttribute("data-toggle", "modal");
     modifyModal.setAttribute("data-target", "#modalModifyCookie");
     let imgCookie = document.createElement('img');
-    imgCookie.setAttribute("src", "/assets/images/cookies.png");
+    imgCookie.setAttribute("src", "https://cdn.jsdelivr.net/gh/VorapratR/dom-js@main/assets/images/cookies.png");
     imgCookie.setAttribute("width", "30px");
 
     modifyModal.appendChild(imgCookie);
