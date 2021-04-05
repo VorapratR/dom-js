@@ -233,18 +233,22 @@ function checkedConsentInApp() {
         }
     }
 
-    if (readCookie('consent-cookie-preference')) {
-        let consentCookiePreference = JSON.parse(readCookie('consent-cookie-preference'));
+    let consentCookiePreference = readCookie('consent-cookie-preference');
+    if (consentCookiePreference) {
+        consentCookiePreference = JSON.parse(consentCookiePreference);
+        let data = CONSENTCOOKIE.getArgs();
         if (consentCookiePreference.analytics) {
-            addAnalytics();
+            addAnalytics(data.propertyID);
+            window[`ga-disable-${data.propertyID}`] = false;
+        } else {
+            window[`ga-disable-${data.propertyID}`] = true;
         }
     }
 
 }
 
-function addAnalytics() {
+function addAnalytics(propertyID) {
     console.log('addAnalytics');
-    let data = CONSENTCOOKIE.getArgs();
     window.dataLayer = window.dataLayer || [];
 
     function gtag() {
@@ -252,7 +256,7 @@ function addAnalytics() {
     }
 
     gtag('js', new Date());
-    gtag('config', data.propertyID);
+    gtag('config', propertyID);
 }
 
 function setDefaultInnerHTML() {
@@ -286,8 +290,9 @@ function setDefaultCheckBox() {
 }
 
 function setDefaultHref() {
-    document.getElementById("privacyPolicy").href = "https://nawaplastic.com/th/privacy-policy.php";
-    document.getElementById("cookiePolicy").href = "https://nawaplastic.com/th/privacy-policy.php";
+    let data = CONSENTCOOKIE.getArgs();
+    document.getElementById("privacyPolicy").href = data.privacyPolicyURL;
+    document.getElementById("cookiePolicy").href = data.cookiePolicyURL;
 }
 
 function setDefaultStyle() {
