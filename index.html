@@ -16,7 +16,7 @@
 </head>
 
 <body>
-    <div id="cookieBar" class="container-fluid px-3 py-3 px-lg-4 py-lg-3  my-2 d-flexjustify-content-center fixed-bottom ">
+    <div id="cookieBar" class="container-fluid px-3 py-3 px-lg-4 py-lg-3  my-2 d-flex justify-content-center fixed-bottom ">
         <div class="row">
             <div class="col-lg-8 d-flex align-items-center">
                 <span id="messageInCookieBar">
@@ -30,17 +30,16 @@
                 <button id="editCookie" type="button" class="btn btn-outline-primary btn-block " data-toggle="modal" data-target="#modalModifyCookie">
                 </button>
             </div>
-            <div class="col-md  my-1  py-0  d-flex align-items-center">
+            <div class="col-md my-1  py-0  d-flex align-items-center">
                 <button id="submitCookie" type="button" class="btn btn-primary btn-block" onclick="saveCookie()"></button>
             </div>
         </div>
     </div>
 
-    <div class="tooltip-test">
-        <button id="modifyModal" class="btn cookie-btn btn-light fixed-bottom mb-2 ml-1 " data-toggle="modal" data-target="#modalModifyCookie">
-            <img src="https://cdn.jsdelivr.net/gh/VorapratR/dom-js@main/assets/images/cookies.png" width="30px" >
-            <span class="tooltip-testtext">การตั้งค่าคุกกี้</span>
-        </div>
+    <div class="tool-tip-cookie">
+        <button id="modifyModal" class="btn cookie-btn btn-light fixed-bottom mb-2 ml-1 " data-toggle="modal" data-target="#modalModifyCookie"></button>
+        <img src="https://cdn.jsdelivr.net/gh/VorapratR/dom-js@main/assets/images/cookies.png" width="30px">
+        <span class="tool-tip-cookie-text">การตั้งค่าคุกกี้</span>
     </div>
 
 
@@ -51,47 +50,47 @@
                     <div class="d-flex align-items-center">
                         <h5 class="modal-title mr-3" id="modalModifyCookieTitle"></h5>
                         <button id="allAccept" type="button" class="btn btn-primary px-md-3" onclick="saveAllAcceptClick()"> 
+                        </button>
                     </div>
-                    
-                    </button>
-        <button type="button" class="close" aria-label="Close" onclick="closeModal()">
+
+                    <button type="button" class="close" aria-label="Close" onclick="closeModal()">
                         <span aria-hidden="true">&times;</span>
                     </button>
-    </div>
-    <div class="px-3">
-        <div class="card-black">
-            <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center">
-                    <b>
-                        Necessary Cookies
-                    </b>
-                    <b class="text-primary ">
-                        เปิดใช้งานตลอดเวลา
-                    </b>
                 </div>
-                <div class="mt-1">
-                    Necessary cookies are required to help a website usable by enabling core functions and access to secure areas of the website. The website cannot be function properly without these cookies and they are enabled by default and cannot be disabled
+                <div class="px-3">
+                    <div class="card-black">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <b>
+                                                Necessary Cookies
+                                            </b>
+                                <b class="text-primary ">
+                                                เปิดใช้งานตลอดเวลา
+                                            </b>
+                            </div>
+                            <div class="mt-1">
+                                Necessary cookies are required to help a website usable by enabling core functions and access to secure areas of the website. The website cannot be function properly without these cookies and they are enabled by default and cannot be disabled
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-black">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <b class="mt-2">Analytics Cookies</b>
+                                <input type="checkbox" id="analyticsCheckbox" data-toggle="toggle" data-size="sm">
+                            </div>
+                            <div class="mt-1">
+                                Analytics cookies help website to understand how visitors interact through the website. These cookies help to improve user experiences by collecting and reporting information.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer-no-top">
+                    <button id="saveAccept" type="button" class="btn btn-primary mx-1 px-3" onclick="saveAcceptClick()">
+                    </button>
                 </div>
             </div>
         </div>
-        <div class="card-black">
-            <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center">
-                    <b class="mt-2">Analytics Cookies</b>
-                    <input type="checkbox" id="analyticsCheckbox" data-toggle="toggle" data-size="sm">
-                </div>
-                <div class="mt-1">
-                    Analytics cookies help website to understand how visitors interact through the website. These cookies help to improve user experiences by collecting and reporting information.
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal-footer-no-top">
-        <button id="saveAccept" type="button" class="btn btn-primary mx-1 px-3" onclick="saveAcceptClick()">
-        </button>
-    </div>
-    </div>
-    </div>
     </div>
 
     <script type="text/javascript">
