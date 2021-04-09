@@ -9,13 +9,16 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
+    <link rel="stylesheet" href="/css/cookieconsent.css">
     <title>Test-Consent-Cookie</title>
 </head>
 
 <body>
-    <div id="cookieBar" class="container-fluid p-2 d-flexjustify-content-center fixed-bottom ">
+    <div id="cookieBar" class="container-fluid px-3 py-3 px-lg-4 py-lg-3  my-2 d-flexjustify-content-center fixed-bottom ">
         <div class="row">
-            <div class="col-sm-8 d-flex align-items-center">
+            <div class="col-lg-8 d-flex align-items-center">
                 <span id="messageInCookieBar">
                     <a id="privacyPolicy" target="_blank"></a>
                     <span id="and" class="ml-1">
@@ -23,76 +26,72 @@
                     </span>
                 </span>
             </div>
-            <div class="col-sm my-1 d-flex align-items-center">
+            <div class="col-md my-1 py-0 d-flex align-items-center">
                 <button id="editCookie" type="button" class="btn btn-outline-primary btn-block " data-toggle="modal" data-target="#modalModifyCookie">
                 </button>
             </div>
-            <div class="col-sm  my-1  d-flex align-items-center">
+            <div class="col-md  my-1  py-0  d-flex align-items-center">
                 <button id="submitCookie" type="button" class="btn btn-primary btn-block" onclick="saveCookie()"></button>
             </div>
         </div>
     </div>
 
+    <div class="tooltip-test">
+        <button id="modifyModal" class="btn cookie-btn btn-light fixed-bottom mb-2 ml-1 " data-toggle="modal" data-target="#modalModifyCookie">
+            <img src="https://cdn.jsdelivr.net/gh/VorapratR/dom-js@main/assets/images/cookies.png" width="30px" >
+            <span class="tooltip-testtext">การตั้งค่าคุกกี้</span>
+        </div>
+    </div>
 
-    <button id="modifyModal" type="button" class="btn btn-light fixed-bottom mb-2 ml-1" data-toggle="modal" data-target="#modalModifyCookie">
-        <img src="https://cdn.jsdelivr.net/gh/VorapratR/dom-js@main/assets/images/cookies.png" width="30px" >
-    </button>
+
     <div class="modal fade" id="modalModifyCookie" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modalModifyCookie" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalModifyCookieTitle"></h5>
-                    <button type="button" class="close" aria-label="Close" onclick="closeModal()">
+                <div class="model-header-no-bottom">
+                    <div class="d-flex align-items-center">
+                        <h5 class="modal-title mr-3" id="modalModifyCookieTitle"></h5>
+                        <button id="allAccept" type="button" class="btn btn-primary px-md-3" onclick="saveAllAcceptClick()"> 
+                    </div>
+                    
+                    </button>
+        <button type="button" class="close" aria-label="Close" onclick="closeModal()">
                         <span aria-hidden="true">&times;</span>
                     </button>
+    </div>
+    <div class="px-3">
+        <div class="card-black">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <b>
+                        Necessary Cookies
+                    </b>
+                    <b class="text-primary ">
+                        เปิดใช้งานตลอดเวลา
+                    </b>
                 </div>
-                <div class="modal-body">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-8">
-                                Strictly Necessary Cookies
-                            </div>
-                            <div class="col-4 text-right">
-                                <input type="checkbox" id="strictlyCheckbox">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-8">
-                                Analytics Cookies
-                            </div>
-                            <div class="col-4 text-right">
-                                <input type="checkbox" id="analyticsCheckbox">
-                            </div>
-                        </div>
-                        <!-- <div class="row">
-                            <div class="col-8">
-                                Preference Cookies
-                            </div>
-                            <div class="col-4">
-                                <input type="checkbox" id="preferenceCheckbox">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-8">
-                                Advertising Cookies
-                            </div>
-                            <div class="col-4">
-                                <input type="checkbox" id="advertisingCheckbox">
-                            </div>
-                        </div> -->
-                    </div>
-                    <div class="container my-3">
-                        <div id="modalBodyMessage"></div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button id="saveAccept" type="button" class="btn btn-outline-dark  mx-1 px-2" onclick="saveAcceptClick()">
-                    </button>
-                    <button id="allAccept" type="button" class="btn btn-primary px-2" onclick="saveAllAcceptClick()">
-                    </button>
+                <div class="mt-1">
+                    Necessary cookies are required to help a website usable by enabling core functions and access to secure areas of the website. The website cannot be function properly without these cookies and they are enabled by default and cannot be disabled
                 </div>
             </div>
         </div>
+        <div class="card-black">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <b class="mt-2">Analytics Cookies</b>
+                    <input type="checkbox" id="analyticsCheckbox" data-toggle="toggle" data-size="sm">
+                </div>
+                <div class="mt-1">
+                    Analytics cookies help website to understand how visitors interact through the website. These cookies help to improve user experiences by collecting and reporting information.
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer-no-top">
+        <button id="saveAccept" type="button" class="btn btn-primary mx-1 px-3" onclick="saveAcceptClick()">
+        </button>
+    </div>
+    </div>
+    </div>
     </div>
 
     <script type="text/javascript">
@@ -161,15 +160,15 @@
             document.getElementById("editCookie").innerHTML = "ปรับแต่งคุกกี้"
             document.getElementById("submitCookie").innerHTML = "ยอมรับทั้งหมด"
             document.getElementById("modalModifyCookieTitle").innerHTML = "การตั้งค่าคุกกี้"
-            document.getElementById("modalBodyMessage").innerHTML = "ข้าพเจ้ายินยอมให้ทางบริษัทใช้ Cookies ประเภท Analytics Cookies ที่ทำหน้าที่ประเมินประสิทธิ ภาพในการทำงานแต่ละส่วนของเว็บไซต์ และการปรับปรุง ซึ่งอาจเป็นส่วนที่บริษัทดำเนินการเอง หรือ ว่าจ้างบุคคลภายนอกดำเนินการดังกล่าวให้ โดยดำเนินการภายใต้ เงื่อนไขนโยบายข้อมูลส่วนบุคคลของ บริษัท"
+                // document.getElementById("modalBodyMessage").innerHTML = "ข้าพเจ้ายินยอมให้ทางบริษัทใช้ Cookies ประเภท Analytics Cookies ที่ทำหน้าที่ประเมินประสิทธิ ภาพในการทำงานแต่ละส่วนของเว็บไซต์ และการปรับปรุง ซึ่งอาจเป็นส่วนที่บริษัทดำเนินการเอง หรือ ว่าจ้างบุคคลภายนอกดำเนินการดังกล่าวให้ โดยดำเนินการภายใต้ เงื่อนไขนโยบายข้อมูลส่วนบุคคลของ บริษัท"
 
-            document.getElementById("saveAccept").innerHTML = "บันทึกการตั้งค่า"
+            document.getElementById("saveAccept").innerHTML = "ยืนยันการเลือกของฉัน"
             document.getElementById("allAccept").innerHTML = "ยอมรับทั้งหมด"
         }
 
         function setDefaultCheckBox() {
-            document.getElementById("strictlyCheckbox").disabled = true
-            document.getElementById("strictlyCheckbox").checked = true
+            // document.getElementById("strictlyCheckbox").disabled = true
+            // document.getElementById("strictlyCheckbox").checked = true
         }
 
         function setDefaultHref() {
@@ -180,7 +179,9 @@
         function setDefaultStyle() {
             document.getElementById("modifyModal").style.zIndex = "5";
             document.getElementById("cookieBar").style.zIndex = "5";
-            document.getElementById("cookieBar").style.backgroundColor = "rgb(239, 239, 239)";
+            document.getElementById("cookieBar").style.border = "1px solid black";
+            document.getElementById("cookieBar").style.borderRadius = "7px";
+
         }
 
         function closeModal() {
