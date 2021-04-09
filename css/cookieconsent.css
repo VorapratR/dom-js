@@ -47,12 +47,12 @@
     margin: -1px;
 }
 
-.tooltip-test {
+.tool-tip-cookie {
     position: relative;
     display: inline-block;
 }
 
-.tooltip-test .tooltip-testtext {
+.tool-tip-cookie .tool-tip-cookie-text {
     visibility: hidden;
     width: 120px;
     background-color: black;
@@ -60,13 +60,14 @@
     text-align: center;
     border-radius: 6px;
     padding: 5px 0;
-    /* Position the tooltip-test */
+    /* Position the tool-tip-cookie */
     position: absolute;
     left: 50px;
+    bottom: 0px;
     z-index: 1;
 }
 
-.tooltip-test:hover .tooltip-testtext {
+.tool-tip-cookie:hover .tool-tip-cookie-text {
     visibility: visible;
 }
 
