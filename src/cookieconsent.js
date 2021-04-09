@@ -152,7 +152,19 @@ function writeHTML() {
 
     let necessaryDescription = document.createElement('div')
     necessaryDescription.className = "mt-1"
-    necessaryDescription.textContent = "Strictly Necessary cookies are required to help a website usable by enabling core functions and access to secure areas of the website. The website cannot be function properly without these cookies and they are enabled by default and cannot be disabled"
+    necessaryDescription.textContent = "Strictly Necessary cookies  Necessary cookies เพื่อช่วยให้การทำงานหลักของเว็บไซต์ใช้งานได้"
+    let necessaryMoreMessage = document.createElement('a')
+    necessaryMoreMessage.id = "necessaryMoreMessage"
+    necessaryMoreMessage.className = "collapse"
+    necessaryMoreMessage.textContent = "รวมถึงการเข้าถึงพื้นที่ที่ปลอดภัยต่าง ๆ ของเว็บไซต์ หากไม่มีคุกกี้นี้เว็บไซต์จะไม่สามารถทำงานได้อย่างเหมาะสม และจะใช้งานได้โดยการตั้งค่าเริ่มต้น โดยไม่สามารถปิดการใช้งานได้"
+    let necessaryMore = document.createElement('a')
+    necessaryMore.className = 'text-primary ml-1'
+    necessaryMore.textContent = "แสดงมากขึ้น >"
+    necessaryMore.setAttribute('data-toggle', 'collapse')
+    necessaryMore.setAttribute('data-target', '#necessaryMoreMessage')
+
+    necessaryDescription.appendChild(necessaryMoreMessage);
+    necessaryDescription.appendChild(necessaryMore)
 
     modalNecessaryCardBody.appendChild(headNecessaryElement)
     modalNecessaryCardBody.appendChild(necessaryDescription)
@@ -179,7 +191,19 @@ function writeHTML() {
 
     let analyticsDescription = document.createElement('div')
     analyticsDescription.className = "mt-1"
-    analyticsDescription.textContent = "Analytics cookies help website to understand how visitors interact through the website. These cookies help to improve user experiences by collecting and reporting information."
+    analyticsDescription.textContent = "Analytics จะช่วยให้เว็บไซต์เข้าใจรูปแบบการใช้งานของผู้เข้าชม"
+    let analyticsMoreMessage = document.createElement('a')
+    analyticsMoreMessage.id = "analyticsMoreMessage"
+    analyticsMoreMessage.className = "collapse"
+    analyticsMoreMessage.textContent = "และจะช่วยปรับปรุงประสบการณ์การใช้งาน โดยการเก็บรวบรวมข้อมูลและรายงานผลการใช้งานของผู้ใช้งาน"
+    let analyticsMore = document.createElement('a')
+    analyticsMore.className = 'text-primary ml-1'
+    analyticsMore.textContent = "แสดงมากขึ้น >"
+    analyticsMore.setAttribute('data-toggle', 'collapse')
+    analyticsMore.setAttribute('data-target', '#analyticsMoreMessage')
+
+    analyticsDescription.appendChild(analyticsMoreMessage);
+    analyticsDescription.appendChild(analyticsMore)
 
     modalAnalyticsCardBody.appendChild(headAnalyticsElement)
     modalAnalyticsCardBody.appendChild(analyticsDescription)
