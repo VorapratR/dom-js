@@ -8,11 +8,34 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <title>Hello, world!</title>
+    <title>Test Cookie Consent</title>
+    <script>
+        window.YETT_BLACKLIST = [
+                /www\.google-analytics\.com/,
+                /www\.googletagmanager\.com/
+            ]
+            // Or a whitelist
+        window.YETT_WHITELIST = [
+            /my-whitelisted-domain/,
+        ]
+    </script>
+    <script src="https://unpkg.com/yett"></script>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-192511574-2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+        gtag('config', 'UA-192511574-2');
+    </script>
 </head>
 
 <body>
-    <h1>Hello, world!</h1>
+    <h1>Test Cookie Consent</h1>
     <script type="text/javascript" src="/src/init.js"></script>
     <script type="text/javascript">
         CONSENTCOOKIE.init({
@@ -31,11 +54,11 @@
 
             privacyPolicyURL: "https://nawaplastic.com/th/privacy-policy.php",
             cookiePolicyURL: "https://nawaplastic.com/th/privacy-policy.php",
-
-            propertyID: "UA-134588981-1",
         });
     </script>
-    <script type="text/javascript" id="syndication" src="/src/syndication.js"></script>
+    <!-- <script type="text/javascript" id="syndication" src="/src/syndication-new-layout-cookie.js"></script> -->
+    <script type="text/javascript" id="cookieconsent" src="/src/cookieconsent.js"></script>
+    <button onclick="window.location.reload()">Block</button>
 </body>
 
 </html>
