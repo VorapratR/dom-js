@@ -69,12 +69,10 @@ function writeHTML() {
     toolTipCookie.className = 'tool-tip-cookie'
     let modifyModal = document.createElement('button');
     modifyModal.id = "modifyModal";
-    modifyModal.className = "btn cookie-btn fixed-bottom mb-2 ml-1 ";
-    modifyModal.setAttribute("type", "button");
+    modifyModal.className = "btn cookie-btn btn-light fixed-bottom mb-2 ml-1 btn-fixed ";
     modifyModal.setAttribute("data-toggle", "modal");
     modifyModal.setAttribute("data-target", "#modalModifyCookie");
     let imgCookie = document.createElement('img');
-    imgCookie.className = "fixed-bottom m-2";
     imgCookie.setAttribute("src", "https://cdn.jsdelivr.net/gh/VorapratR/dom-js@main/assets/images/cookies.png");
     imgCookie.setAttribute("width", "30px");
     let toolTipCookieText = document.createElement('span')
@@ -82,7 +80,7 @@ function writeHTML() {
     toolTipCookieText.className = 'tool-tip-cookie-text'
 
     modifyModal.appendChild(imgCookie);
-    modifyModal.appendChild(toolTipCookieText);
+    modifyModal.appendChild(toolTipCookieText)
     toolTipCookie.appendChild(modifyModal)
     ccmain.parentNode.insertBefore(toolTipCookie, ccmain);
     // modifyModal end
@@ -194,7 +192,7 @@ function writeHTML() {
     modalFooter.className = "modal-footer";
     let saveAccept = document.createElement('button');
     saveAccept.id = "saveAccept";
-    saveAccept.className = "btn btn-outline-dark mx-1 px-2";
+    saveAccept.className = "btn btn-primary mx-1 px-2";
     saveAccept.setAttribute("type", "button");
     saveAccept.setAttribute('onclick', "saveAcceptClick()")
 
@@ -316,6 +314,7 @@ function setDefaultStyle() {
     document.getElementById("cookieBar").style.zIndex = "5";
     document.getElementById("cookieBar").style.border = "1px solid black";
     document.getElementById("cookieBar").style.borderRadius = "7px";
+    document.getElementById("cookieBar").style.backgroundColor = "white";
 }
 
 function closeModal() {
