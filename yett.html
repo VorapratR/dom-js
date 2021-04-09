@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Yett</title>
+
+    <script>
+        window.YETT_BLACKLIST = [
+                /www\.google-analytics\.com/,
+                /www\.googletagmanager\.com/
+            ]
+            // Or a whitelist
+        window.YETT_WHITELIST = [
+            /my-whitelisted-domain/,
+        ]
+    </script>
+    <script src="https://unpkg.com/yett"></script>
+    <script id="my-block" src="/src/block1.js"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-192511574-2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+        gtag('config', 'UA-192511574-2');
+    </script>
+</head>
+
+<body>
+
+    <button onclick="window.yett.unblock()">Unblock All</button>
+    <button onclick="window.yett.unblock('www.google-analytics.com')">Unblock google-analytics</button>
+    <button onclick="window.yett.unblock('www.googletagmanager.com')">Unblock googletagmanager</button>
+    <button onclick="window.location.reload()">Block</button>
+</body>
+
+</html>
