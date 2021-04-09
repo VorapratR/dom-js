@@ -75,7 +75,9 @@
                                 <a class="collapse" id="necessaryMore">
                                     รวมถึงการเข้าถึงพื้นที่ที่ปลอดภัยต่าง ๆ ของเว็บไซต์ หากไม่มีคุกกี้นี้เว็บไซต์จะไม่สามารถทำงานได้อย่างเหมาะสม และจะใช้งานได้โดยการตั้งค่าเริ่มต้น โดยไม่สามารถปิดการใช้งานได้
                                 </a>
-                                <a class="text-primary" data-toggle="collapse" data-target="#necessaryMore">แสดงมากขึ้น &raquo;</a>
+                                <a id="necessaryBtn" class="text-primary" data-toggle="collapse" data-target="#necessaryMore">
+                                    แสดงมากขึ้น
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -90,7 +92,9 @@
                                 <a class="collapse" id="analyticsMore">
                                     และจะช่วยปรับปรุงประสบการณ์การใช้งาน โดยการเก็บรวบรวมข้อมูลและรายงานผลการใช้งานของผู้ใช้งาน
                                 </a>
-                                <a class="text-primary" data-toggle="collapse" data-target="#analyticsMore">แสดงมากขึ้น &raquo;</a></p>
+                                <a id="analyticsBtn" class="text-primary" data-toggle="collapse" data-target="#analyticsMore">
+                                    แสดงมากขึ้น
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -110,6 +114,20 @@
             setDefaultHref();
             setDefaultCheckBox();
             setDefaultStyle();
+            collapseDescription();
+        }
+
+        function collapseDescription() {
+            $('#necessaryBtn').click(function() {
+                $(this).text(function(i, old) {
+                    return old.includes('มาก') ? 'แสดงน้อยลง' : 'แสดงมากขึ้น';
+                });
+            });
+            $('#analyticsBtn').click(function() {
+                $(this).text(function(i, old) {
+                    return old.includes('มาก') ? 'แสดงน้อยลง' : 'แสดงมากขึ้น';
+                });
+            });
         }
 
         function saveAcceptClick() {
