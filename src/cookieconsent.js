@@ -327,6 +327,7 @@ function setDefaultInnerHTML() {
 
     document.getElementById("necessaryMoreId").innerHTML = data.showMoreText;
     document.getElementById("analyticsMoreId").innerHTML = data.showMoreText;
+    document.getElementById("closeIcon").innerHTML = "&times;";
 
     // document.getElementById("necessaryTitle").textContent = data.necessaryTitleText;
     // document.getElementById("necessaryStatus").textContent = data.necessaryStatusText;
