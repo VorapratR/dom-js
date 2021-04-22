@@ -71,20 +71,16 @@
     z-index: 1;
 }
 
-@media (min-width: 400px) {
-    .tool-tip-cookie:hover .tool-tip-cookie-text {
-        visibility: visible;
-    }
-}
-
-.container-fluid,
-.container-lg,
-.container-md,
-.container-sm,
-.container-xl {
+.fluid-r-l {
     width: auto;
     padding-right: 15px;
     padding-left: 15px;
     margin-right: 5px;
     margin-left: 5px;
+}
+
+@media (min-width: 400px) {
+    .tool-tip-cookie:hover .tool-tip-cookie-text {
+        visibility: visible;
+    }
 }
