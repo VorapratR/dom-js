@@ -36,6 +36,7 @@ window.YETT_BLACKLIST = [
     // window.YETT_WHITELIST = [
     //     /my-whitelisted-domain/,
     // ]
+
 window.onload = function() {
     writeHTML();
     checkedConsentInApp(true);
@@ -363,15 +364,6 @@ function setDefaultInnerHTML() {
     document.getElementById("analyticsMoreId").innerHTML = data.showMoreText;
     document.getElementById("closeIcon").innerHTML = "&times;";
 
-    // document.getElementById("necessaryTitle").textContent = data.necessaryTitleText;
-    // document.getElementById("necessaryStatus").textContent = data.necessaryStatusText;
-    // document.getElementById("necessaryDescription").textContent = data.necessaryDescriptionText;
-    // console.log(document.getElementById("necessaryMoreMessageId"));
-    // document.getElementById("necessaryMoreMessageId").textContent = data.necessaryMoreMessageText;
-
-    // document.getElementById("analyticsTitle").innerHTML = data.analyticsTitleText;
-    // document.getElementById("analyticsDescription").innerHTML = data.analyticsDescriptionText;
-    // document.getElementById("analyticsMoreMessageId").innerHTML = data.analyticsMoreMessageText;
 }
 
 function collapseDescription() {
