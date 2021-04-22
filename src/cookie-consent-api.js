@@ -1,53 +1,60 @@
-var data = {
-    messageInCookieBarText: "บริษัท Test จำกัดใช้คุกกี้เพื่อให้ท่านได้รับประสบการณ์การใช้งานที่ดียิ่งขึ้น",
-    privacyPolicyText: "อ่านนโยบายการคุ้มครองข้อมูลส่วนบุคคล",
-    andText: "และ",
-    cookiePolicyText: "นโยบายคุกกี้",
-    editCookieText: "ปรับแต่งคุกกี้",
-    submitCookieText: "ยอมรับทั้งหมด",
-    modalModifyCookieTitleText: "การตั้งค่าคุกกี้",
-    modalBodyMessageText: "ข้าพเจ้ายินยอมให้ทางบริษัทใช้ Cookies ประเภท Analytics Cookies " +
-        "ที่ทำหน้าที่ประเมินประสิทธิ ภาพในการทำงานแต่ละส่วนของเว็บไซต์ และการปรับปรุง ซึ่งอาจเป็นส่วนที่บริษัทดำเนินการเอง " +
-        " หรือ ว่าจ้างบุคคลภายนอกดำเนินการดังกล่าวให้ โดยดำเนินการภายใต้ เงื่อนไขนโยบายข้อมูลส่วนบุคคลของ บริษัท",
-    saveAcceptText: "บันทึกการตั้งค่า",
-    allAcceptText: "ยอมรับทั้งหมด",
-
-    privacyPolicyURL: "https://nawaplastic.com/th/privacy-policy.php",
-    cookiePolicyURL: "https://nawaplastic.com/th/privacy-policy.php",
-
-    showMoreText: "แสดงมากขึ้น",
-    showLessText: "แสดงน้อยลง",
-    showMoreOperator: 'มาก',
-
-    necessaryTitleText: "Strictly Necessary Cookies",
-    necessaryStatusText: "เปิดใช้งานตลอดเวลา",
-    necessaryDescriptionText: "Strictly Necessary cookies  Necessary cookies เพื่อช่วยให้การทำงานหลักของเว็บไซต์ใช้งานได้",
-    necessaryMoreMessageText: "รวมถึงการเข้าถึงพื้นที่ที่ปลอดภัยต่าง ๆ ของเว็บไซต์ หากไม่มีคุกกี้นี้เว็บไซต์จะไม่สามารถทำงานได้อย่างเหมาะสม และจะใช้งานได้โดยการตั้งค่าเริ่มต้น โดยไม่สามารถปิดการใช้งานได้",
-
-    analyticsTitleText: "Analytics Cookies",
-    analyticsDescriptionText: "Analytics cookies จะช่วยให้เว็บไซต์เข้าใจรูปแบบการใช้งานของผู้เข้าชม",
-    analyticsMoreMessageText: "และจะช่วยปรับปรุงประสบการณ์การใช้งาน โดยการเก็บรวบรวมข้อมูลและรายงานผลการใช้งานของผู้ใช้งาน"
-}
-
 window.YETT_BLACKLIST = [
-        /www\.google-analytics\.com/,
-        /www\.googletagmanager\.com/
-    ]
-    // // Or a whitelist
-    // window.YETT_WHITELIST = [
-    //     /my-whitelisted-domain/,
-    // ]
-
+    /www\.google-analytics\.com/,
+    /www\.googletagmanager\.com/,
+]
 window.onload = function() {
-    writeHTML();
-    checkedConsentInApp(true);
-    setDefaultInnerHTML();
-    setDefaultHref();
-    setDefaultStyle();
-    collapseDescription();
+    let request = new XMLHttpRequest()
+    request.open('GET', 'https://ghibliapi.herokuapp.com/films', true)
+    request.onload = function() {
+        // Begin accessing JSON data here
+        var result = JSON.parse(this.response)
+        if (request.status >= 200 && request.status < 400) {
+
+            result = {
+                messageInCookieBarText: "บริษัท Test จำกัดใช้คุกกี้เพื่อให้ท่านได้รับประสบการณ์การใช้งานที่ดียิ่งขึ้น",
+                privacyPolicyText: "อ่านนโยบายการคุ้มครองข้อมูลส่วนบุคคล",
+                andText: "และ",
+                cookiePolicyText: "นโยบายคุกกี้",
+                editCookieText: "ปรับแต่งคุกกี้",
+                submitCookieText: "ยอมรับทั้งหมด",
+                modalModifyCookieTitleText: "การตั้งค่าคุกกี้",
+                modalBodyMessageText: "ข้าพเจ้ายินยอมให้ทางบริษัทใช้ Cookies ประเภท Analytics Cookies " +
+                    "ที่ทำหน้าที่ประเมินประสิทธิ ภาพในการทำงานแต่ละส่วนของเว็บไซต์ และการปรับปรุง ซึ่งอาจเป็นส่วนที่บริษัทดำเนินการเอง " +
+                    " หรือ ว่าจ้างบุคคลภายนอกดำเนินการดังกล่าวให้ โดยดำเนินการภายใต้ เงื่อนไขนโยบายข้อมูลส่วนบุคคลของ บริษัท",
+                saveAcceptText: "บันทึกการตั้งค่า",
+                allAcceptText: "ยอมรับทั้งหมด",
+
+                privacyPolicyURL: "https://nawaplastic.com/th/privacy-policy.php",
+                cookiePolicyURL: "https://nawaplastic.com/th/privacy-policy.php",
+
+                showMoreText: "แสดงมากขึ้น",
+                showLessText: "แสดงน้อยลง",
+                showMoreOperator: 'มาก',
+
+                necessaryTitleText: "Strictly Necessary Cookies",
+                necessaryStatusText: "เปิดใช้งานตลอดเวลา",
+                necessaryDescriptionText: "Strictly Necessary cookies  Necessary cookies เพื่อช่วยให้การทำงานหลักของเว็บไซต์ใช้งานได้",
+                necessaryMoreMessageText: "รวมถึงการเข้าถึงพื้นที่ที่ปลอดภัยต่าง ๆ ของเว็บไซต์ หากไม่มีคุกกี้นี้เว็บไซต์จะไม่สามารถทำงานได้อย่างเหมาะสม และจะใช้งานได้โดยการตั้งค่าเริ่มต้น โดยไม่สามารถปิดการใช้งานได้",
+
+                analyticsTitleText: "Analytics Cookies",
+                analyticsDescriptionText: "Analytics cookies จะช่วยให้เว็บไซต์เข้าใจรูปแบบการใช้งานของผู้เข้าชม",
+                analyticsMoreMessageText: "และจะช่วยปรับปรุงประสบการณ์การใช้งาน โดยการเก็บรวบรวมข้อมูลและรายงานผลการใช้งานของผู้ใช้งาน"
+            }
+            writeHTML(result);
+            checkedConsentInApp();
+            setDefaultInnerHTML(result);
+            setDefaultHref(result);
+            setDefaultStyle();
+            collapseDescription(result);
+        } else {
+            console.log('error');
+        }
+    }
+
+    request.send()
 }
 
-function writeHTML() {
+function writeHTML(data) {
     let ccmain = document.body;
     // cookie bar start
     let cookieBar = document.createElement('div');
@@ -93,7 +100,7 @@ function writeHTML() {
     submitCookie.id = "submitCookie";
     submitCookie.className = "btn btn-primary btn-block";
     submitCookie.setAttribute("type", "button");
-    submitCookie.setAttribute("onclick", "saveCookie()")
+    submitCookie.setAttribute("onclick", "saveAllAcceptClick()")
 
     cookieBarColSubmit.appendChild(submitCookie);
 
@@ -287,9 +294,11 @@ function saveAcceptClick() {
         document.cookie = newCookie
             // console.log(document.cookie);
     }
-    $('#modalModifyCookie').modal('hide');
-    checkedConsentInApp(false);
 
+    if (!checkedConsentInApp()) {
+        blockAnalytics()
+    }
+    $('#modalModifyCookie').modal('hide');
 }
 
 function saveAllAcceptClick() {
@@ -297,15 +306,7 @@ function saveAllAcceptClick() {
     saveAcceptClick();
 }
 
-function saveCookie() {
-    console.log('saveCookie');
-    document.cookie = "consent-cookie" + "=" + "allows" + ";";
-    checkedConsentInApp(false);
-    document.getElementById("analyticsCheckbox").checked = true;
-    saveAcceptClick();
-}
-
-function checkedConsentInApp(fromWindowLoad) {
+function checkedConsentInApp() {
     document.getElementById("cookieBar").style.cssText = "display:block";
     document.getElementById("modifyModal").style.cssText = 'display:none';
     if (readCookie('consent-cookie')) {
@@ -321,26 +322,24 @@ function checkedConsentInApp(fromWindowLoad) {
         consentCookiePreference = JSON.parse(consentCookiePreference);
         if (consentCookiePreference.analytics) {
             unblockAnalytics();
+            return true
+        } else {
+            return false
         }
-        // else {
-        //     if (fromWindowLoad == false) {
-        //         blockAnalytics();
-        //     }
-        // }
     }
 
 }
 
-// function blockAnalytics() {
-//     window.location.reload();
-// }
+function blockAnalytics() {
+    window.location.reload();
+}
 
 function unblockAnalytics() {
     window.yett.unblock(/www\.google-analytics\.com/)
     window.yett.unblock(/www\.googletagmanager\.com/)
 }
 
-function setDefaultInnerHTML() {
+function setDefaultInnerHTML(data) {
     document.getElementById("messageInCookieBar").innerHTML = `
     ${data.messageInCookieBarText} 
     <a id="privacyPolicy" target="_blank"></a>
@@ -367,7 +366,7 @@ function setDefaultInnerHTML() {
 
 }
 
-function collapseDescription() {
+function collapseDescription(data) {
     $('#necessaryMoreId').click(function() {
         $(this).text(function(i, old) {
             return old.includes(data.showMoreOperator) ? data.showLessText : data.showMoreText;
@@ -380,7 +379,7 @@ function collapseDescription() {
     });
 }
 
-function setDefaultHref() {
+function setDefaultHref(data) {
     document.getElementById("privacyPolicy").href = data.privacyPolicyURL;
     document.getElementById("cookiePolicy").href = data.cookiePolicyURL;
 }
