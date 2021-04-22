@@ -39,7 +39,7 @@ window.onload = function () {
 }
 
 function writeHTML() {
-    let ccmain = document.getElementById('cookieconsent');
+    let ccmain = document.body;
     // cookie bar start
     let cookieBar = document.createElement('div');
     cookieBar.id = "cookieBar";
@@ -93,7 +93,7 @@ function writeHTML() {
     cookieBarRow.appendChild(cookieBarColSubmit);
 
     cookieBar.appendChild(cookieBarRow);
-    ccmain.parentNode.insertBefore(cookieBar, ccmain);
+    ccmain.appendChild(cookieBar);
     // cookie bar end
 
     // modifyModal start (cookie edit btn)
@@ -114,7 +114,7 @@ function writeHTML() {
     modifyModal.appendChild(imgCookie);
     modifyModal.appendChild(toolTipCookieText)
     toolTipCookie.appendChild(modifyModal)
-    ccmain.parentNode.insertBefore(toolTipCookie, ccmain);
+    ccmain.appendChild(toolTipCookie);
     // modifyModal end
 
     // cookie modal start
@@ -261,7 +261,7 @@ function writeHTML() {
     modalDialog.appendChild(modalContent);
     modalModifyCookie.appendChild(modalDialog);
 
-    ccmain.parentNode.insertBefore(modalModifyCookie, ccmain);
+    ccmain.appendChild(modalModifyCookie);
     // cookie modal end
 }
 
