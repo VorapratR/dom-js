@@ -1,4 +1,9 @@
 let blackListScripts;
+window.YETT_BLACKLIST = [
+    /www\.google-analytics\.com/,
+    /www\.googletagmanager\.com/,
+];
+
 window.onload = function() {
     let request = new XMLHttpRequest()
     request.open('GET', 'https://ghibliapi.herokuapp.com/films', true)
@@ -6,7 +11,7 @@ window.onload = function() {
 
         let result = JSON.parse(this.response)
         if (request.status >= 200 && request.status < 400) {
-
+            window.yett.unblock(/www\.googletagmanager\.com/)
             result = {
                 messageInCookieBarText: "บริษัท Test จำกัดใช้คุกกี้เพื่อให้ท่านได้รับประสบการณ์การใช้งานที่ดียิ่งขึ้น",
                 privacyPolicyText: "อ่านนโยบายการคุ้มครองข้อมูลส่วนบุคคล",
