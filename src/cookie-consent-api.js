@@ -1,13 +1,10 @@
-window.YETT_BLACKLIST = [
-    /www\.google-analytics\.com/,
-    /www\.googletagmanager\.com/,
-]
+let blackListScripts;
 window.onload = function() {
     let request = new XMLHttpRequest()
     request.open('GET', 'https://ghibliapi.herokuapp.com/films', true)
     request.onload = function() {
-        // Begin accessing JSON data here
-        var result = JSON.parse(this.response)
+
+        let result = JSON.parse(this.response)
         if (request.status >= 200 && request.status < 400) {
 
             result = {
@@ -33,13 +30,18 @@ window.onload = function() {
 
                 necessaryTitleText: "Strictly Necessary Cookies",
                 necessaryStatusText: "เปิดใช้งานตลอดเวลา",
-                necessaryDescriptionText: "Strictly Necessary cookies  Necessary cookies เพื่อช่วยให้การทำงานหลักของเว็บไซต์ใช้งานได้",
-                necessaryMoreMessageText: "รวมถึงการเข้าถึงพื้นที่ที่ปลอดภัยต่าง ๆ ของเว็บไซต์ หากไม่มีคุกกี้นี้เว็บไซต์จะไม่สามารถทำงานได้อย่างเหมาะสม และจะใช้งานได้โดยการตั้งค่าเริ่มต้น โดยไม่สามารถปิดการใช้งานได้",
+                necessaryDescriptionText: "Strictly Necessary Cookies จะช่วยให้การทำงานหลักของเว็บไซต์ใช้งานได้",
+                necessaryMoreMessageText: "รวมถึงการเข้าถึงพื้นที่ที่ปลอดภัยต่าง ๆ ของเว็บไซต์ หากไม่มีคุกกี้ชนิดนี้เว็บไซต์จะไม่สามารถทำงานได้อย่างถูกต้อง และจะไม่สามารถใช้โดยการตั้งค่าเริ่มต้นได้",
 
                 analyticsTitleText: "Analytics Cookies",
-                analyticsDescriptionText: "Analytics cookies จะช่วยให้เว็บไซต์เข้าใจรูปแบบการใช้งานของผู้เข้าชม",
-                analyticsMoreMessageText: "และจะช่วยปรับปรุงประสบการณ์การใช้งาน โดยการเก็บรวบรวมข้อมูลและรายงานผลการใช้งานของผู้ใช้งาน"
+                analyticsDescriptionText: "Analytics Cookies จะช่วยให้เว็บไซต์เข้าใจรูปแบบการใช้งานของผู้เข้าชม",
+                analyticsMoreMessageText: " และช่วยปรับปรุงประสบการณ์การใช้งาน โดยการเก็บรวบรวมข้อมูล และรายงานผลการใช้งานของผู้ใช้งาน"
             }
+
+            blackListScripts = [
+                /www\.google-analytics\.com/,
+                /www\.googletagmanager\.com/
+            ];
             writeHTML(result);
             checkedConsentInApp();
             setDefaultInnerHTML(result);
@@ -335,8 +337,9 @@ function blockAnalytics() {
 }
 
 function unblockAnalytics() {
-    window.yett.unblock(/www\.google-analytics\.com/)
-    window.yett.unblock(/www\.googletagmanager\.com/)
+    blackListScripts.forEach(blackList => {
+        window.yett.unblock(blackList)
+    })
 }
 
 function setDefaultInnerHTML(data) {
