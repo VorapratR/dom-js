@@ -7,7 +7,7 @@ window.YETT_BLACKLIST = [
 
 window.onload = function() {
     let request = new XMLHttpRequest()
-    request.open('GET', 'https://847cee88a728.ngrok.io/api/cookie/1', true)
+    request.open('GET', 'https://dev-cookie-consent.dosetech.co/api/cookie/1', true)
     request.onload = function() {
         let result = {
             messageInCookieBarText: "บริษัท Test จำกัดใช้คุกกี้เพื่อให้ท่านได้รับประสบการณ์การใช้งานที่ดียิ่งขึ้น",
@@ -43,7 +43,7 @@ window.onload = function() {
         };
         let data = JSON.parse(this.response)
         if (request.status >= 200 && request.status < 400) {
-            console.log(data.detail);
+            data.detail = data.detail[0];
             if (data.detail) {
                 result = mapData(data.detail);
                 blackListScripts = data.detail.blackListScripts;
