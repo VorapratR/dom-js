@@ -1,40 +1,49 @@
-function setBlackList() {
-    window.YETT_BLACKLIST = [
-        /www\.google-analytics\.com/,
-        /www\.googletagmanager\.com/,
-    ];
+var cookies = [
+    // /www\.google-analytics\.com/,
+    // /www\.googletagmanager\.com/
+];
 
-    var request = new XMLHttpRequest()
-    request.open('GET', 'https://ghibliapi.herokuapp.com/films', true)
-    request.onload = function() {
+var url = 'http://dev-cookie-consent.dosetech.co/api/cookie/1';
 
-        var data = JSON.parse(this.response)
-        if (request.status >= 200 && request.status < 400) {
-            console.log(data);
-            window.yett.unblock(/www\.googletagmanager\.com/)
-        }
-    }
-    request.send()
+async function getBlockScript(method, url) {
+    return await new Promise(function(resolve, reject) {
+        let xhr = new XMLHttpRequest();
+        xhr.open(method, url);
+        xhr.onload = async function() {
+            if (this.status >= 200 && this.status < 300) {
+                var data = JSON.parse(xhr.response);
+                var result = data.detail[0];
+                var arr = [];
+                result.blackListScripts.forEach(element => {
+                    arr.push(new RegExp(element.trim()));
+                });
+                resolve(arr);
+            } else {
+                reject({
+                    status: this.status,
+                    statusText: xhr.statusText
+                });
+            }
+        };
+        xhr.onerror = function() {
+            reject({
+                status: this.status,
+                statusText: xhr.statusText
+            });
+        };
+        xhr.send();
+    });
 }
-document.addEventListener("DOMContentLoaded", setBlackList());
-// function readTextFile(file, callback) {
-//     var rawFile = new XMLHttpRequest();
-//     rawFile.overrideMimeType("application/json");
-//     rawFile.open("GET", file, true);
-//     rawFile.onreadystatechange = function() {
-//         if (rawFile.readyState === 4 && rawFile.status == "200") {
-//             callback(rawFile.responseText);
-//         }
-//     }
-//     rawFile.send(null);
-// }
-// document.addEventListener("DOMContentLoaded",
-//     readTextFile("/src/test.json", function(text) {
-//         var data = JSON.parse(text);
-//         console.log(data);
-//         window.YETT_BLACKLIST = [
-//             /www\.google-analytics\.com/,
-//             /www\.googletagmanager\.com/,
-//         ];
-//     })
-// );
+
+async function setBlockScript() {
+    console.log("--setBlockScript--");
+
+    let result = await getBlockScript("GET", url);
+
+    console.log("--result--", result);
+
+    window.YETT_BLACKLIST = result;
+    console.log("--setBlockScript--");
+}
+
+document.addEventListener("DOMContentLoaded", setBlockScript());

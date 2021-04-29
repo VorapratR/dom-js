@@ -1,23 +1,19 @@
 let blackListScripts;
 // window.YETT_BLACKLIST = [
-//     /www\.test\.com/,
 //     /www\.google-analytics\.com/,
-//     /www\.googletagmanager\.com/,
 // ];
-
-window.onload = function() {
-    let request = new XMLHttpRequest()
-    request.open('GET', 'https://dev-cookie-consent.dosetech.co/api/cookie/1', true)
+window.onload = async function() {
+    console.log("--onload--");
+    let request = new XMLHttpRequest();
+    request.open('GET', 'http://dev-cookie-consent.dosetech.co/api/cookie/1', true)
     request.onload = function() {
+
         let result = {};
-        let data = JSON.parse(this.response)
+        let data = JSON.parse(this.response);
         if (request.status >= 200 && request.status < 400) {
-            data.detail = data.detail[0];
-            if (data.detail) {
-                result = mapData(data.detail);
-                blackListScripts = data.detail.blackListScripts;
-                // unblockDetached(data.detail);
-            }
+            result = data.detail[0]
+            console.log(result.blackListScripts);
+            blackListScripts = result.blackListScripts
             writeHTML(result);
             checkedConsentInApp();
             setDefaultInnerHTML(result);
@@ -30,66 +26,7 @@ window.onload = function() {
     }
 
     request.send()
-}
-
-function getIPClient() {
-    let request = new XMLHttpRequest()
-    let result = {};
-    request.open('GET', 'https://api.db-ip.com/v2/free/self', true)
-    request.onload = function() {
-        if (request.status >= 200 && request.status < 400) {
-            result = JSON.parse(this.response)
-            console.log(result);
-        }
-    }
-
-    request.send()
-    return result;
-}
-
-function mapData(data) {
-    return {
-        messageInCookieBarText: data.messageInCookieBarText,
-        privacyPolicyText: data.privacyPolicyText,
-        andText: data.andText,
-        cookiePolicyText: data.cookiePolicyText,
-        editCookieText: data.editCookieText,
-        submitCookieText: data.submitCookieText,
-        modalModifyCookieTitleText: data.modalModifyCookieTitleText,
-        modalBodyMessageText: data.modalBodyMessageText,
-        saveAcceptText: data.saveAcceptText,
-        allAcceptText: data.allAcceptText,
-
-        privacyPolicyURL: data.privacyPolicyURL,
-        cookiePolicyURL: data.cookiePolicyURL,
-
-        showMoreText: data.showMoreText,
-        showLessText: data.showLessText,
-        showMoreOperator: data.showMoreOperator,
-
-        necessaryTitleText: data.necessaryTitleText,
-        necessaryStatusText: data.necessaryStatusText,
-        necessaryDescriptionText: data.necessaryDescriptionText,
-        necessaryMoreMessageText: data.necessaryMoreMessageText,
-
-        analyticsTitleText: data.analyticsTitleText,
-        analyticsDescriptionText: data.analyticsDescriptionText,
-        analyticsMoreMessageText: data.analyticsMoreMessageText,
-    }
-}
-
-function unblockDetached(data) {
-    if (data.blackListScripts.length > 0) {
-        let bufferYettBlackList = window.YETT_BLACKLIST.map(String);
-        let differences = bufferYettBlackList.filter(blackList => !data.blackListScripts.includes(blackList))
-        console.log(differences);
-        if (differences.length > 0) {
-            differences = differences.map(Object)
-            differences.forEach(difference => {
-                window.yett.unblock(difference)
-            })
-        }
-    }
+    console.log("--onload--");
 }
 
 function writeHTML(data) {
@@ -323,12 +260,12 @@ function saveAcceptClick() {
     let dataCookie = {
         analytics: document.getElementById("analyticsCheckbox").checked
     }
-    let newCookie = " cookie-consent-preference" + '=' + JSON.stringify(dataCookie) + ";"
-    if (readCookie('cookie-consent')) {
+    let newCookie = " consent-cookie-preference" + '=' + JSON.stringify(dataCookie) + ";"
+    if (readCookie('consent-cookie')) {
         document.cookie = newCookie
             // console.log(document.cookie);
     } else {
-        document.cookie = "cookie-consent" + "=" + "allows" + ";"
+        document.cookie = "consent-cookie" + "=" + "allows" + ";"
         document.cookie = newCookie
             // console.log(document.cookie);
     }
@@ -347,14 +284,14 @@ function saveAllAcceptClick() {
 function checkedConsentInApp() {
     document.getElementById("cookieBar").style.cssText = "display:block";
     document.getElementById("modifyModal").style.cssText = 'display:none';
-    if (readCookie('cookie-consent')) {
-        if (readCookie('cookie-consent') == "allows") {
+    if (readCookie('consent-cookie')) {
+        if (readCookie('consent-cookie') == "allows") {
             document.getElementById("cookieBar").style.cssText = 'display:none!important';
             document.getElementById("modifyModal").style.cssText = 'display:inline';
         }
     }
 
-    let consentCookiePreference = readCookie('cookie-consent-preference');
+    let consentCookiePreference = readCookie('consent-cookie-preference');
 
     if (consentCookiePreference) {
         consentCookiePreference = JSON.parse(consentCookiePreference);
@@ -373,10 +310,10 @@ function blockAnalytics() {
 }
 
 function unblockAnalytics() {
-    console.log(blackListScripts);
     if (blackListScripts) {
-        blackListScripts = blackListScripts.map(Object)
+        blackListScripts = blackListScripts.map(script => new RegExp(script));
         blackListScripts.forEach(blackList => {
+            console.log(blackList);
             window.yett.unblock(blackList)
         })
     }
@@ -436,7 +373,7 @@ function setDefaultStyle() {
 }
 
 function closeModal() {
-    if (!readCookie("cookie-consent-preference")) {
+    if (!readCookie("consent-cookie-preference")) {
         document.getElementById("analyticsCheckbox").checked = false;
     }
     $('#modalModifyCookie').modal('hide');
