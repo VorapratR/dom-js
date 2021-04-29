@@ -1,6 +1,6 @@
 let blackListScripts;
 window.YETT_BLACKLIST = [
-    // /www\.test\.com/,
+    /www\.test\.com/,
     /www\.google-analytics\.com/,
     /www\.googletagmanager\.com/,
 ];
@@ -61,6 +61,21 @@ window.onload = function() {
     }
 
     request.send()
+}
+
+function getIPClient() {
+    let request = new XMLHttpRequest()
+    let result = {};
+    request.open('GET', 'https://api.db-ip.com/v2/free/self', true)
+    request.onload = function() {
+        if (request.status >= 200 && request.status < 400) {
+            result = JSON.parse(this.response)
+            console.log(result);
+        }
+    }
+
+    request.send()
+    return result;
 }
 
 function mapData(data) {
@@ -340,12 +355,12 @@ function saveAcceptClick() {
     let dataCookie = {
         analytics: document.getElementById("analyticsCheckbox").checked
     }
-    let newCookie = " consent-cookie-preference" + '=' + JSON.stringify(dataCookie) + ";"
-    if (readCookie('consent-cookie')) {
+    let newCookie = " cookie-consent-preference" + '=' + JSON.stringify(dataCookie) + ";"
+    if (readCookie('cookie-consent')) {
         document.cookie = newCookie
             // console.log(document.cookie);
     } else {
-        document.cookie = "consent-cookie" + "=" + "allows" + ";"
+        document.cookie = "cookie-consent" + "=" + "allows" + ";"
         document.cookie = newCookie
             // console.log(document.cookie);
     }
@@ -364,14 +379,14 @@ function saveAllAcceptClick() {
 function checkedConsentInApp() {
     document.getElementById("cookieBar").style.cssText = "display:block";
     document.getElementById("modifyModal").style.cssText = 'display:none';
-    if (readCookie('consent-cookie')) {
-        if (readCookie('consent-cookie') == "allows") {
+    if (readCookie('cookie-consent')) {
+        if (readCookie('cookie-consent') == "allows") {
             document.getElementById("cookieBar").style.cssText = 'display:none!important';
             document.getElementById("modifyModal").style.cssText = 'display:inline';
         }
     }
 
-    let consentCookiePreference = readCookie('consent-cookie-preference');
+    let consentCookiePreference = readCookie('cookie-consent-preference');
 
     if (consentCookiePreference) {
         consentCookiePreference = JSON.parse(consentCookiePreference);
@@ -451,7 +466,7 @@ function setDefaultStyle() {
 }
 
 function closeModal() {
-    if (!readCookie("consent-cookie-preference")) {
+    if (!readCookie("cookie-consent-preference")) {
         document.getElementById("analyticsCheckbox").checked = false;
     }
     $('#modalModifyCookie').modal('hide');
