@@ -16,7 +16,6 @@ window.onload = function () {
             blackListScripts = result.blackListScripts
             writeHTML(result);
             checkedConsentInApp();
-            setDefaultInnerHTML(result);
             setDefaultHref(result);
             setDefaultStyle();
             collapseDescription(result);
@@ -43,14 +42,18 @@ function writeHTML(data) {
     cookieBarColTitle.className = "col-lg-8 col-md-12 d-flex align-items-center";
     let messageInCookieBar = document.createElement('span');
     messageInCookieBar.id = "messageInCookieBar";
+    messageInCookieBar.textContent = data.messageInCookieBarText
     let privacyPolicyTitle = document.createElement('a');
     privacyPolicyTitle.id = "privacyPolicy";
+    privacyPolicyTitle.textContent = data.privacyPolicyText
     privacyPolicyTitle.setAttribute("target", "_blank");
     let andTitle = document.createElement('span');
     andTitle.id = "and";
     andTitle.className = "ml-1";
+    andTitle.textContent = data.andTitleText;
     let cookiePolicyTitle = document.createElement('a');
     cookiePolicyTitle.id = "cookiePolicy";
+    cookiePolicyTitle.textContent = data.cookiePolicyText
     cookiePolicyTitle.setAttribute("target", "_blank");
 
     andTitle.appendChild(cookiePolicyTitle);
@@ -63,6 +66,7 @@ function writeHTML(data) {
     let editCookie = document.createElement('button');
     editCookie.id = "editCookie";
     editCookie.className = "btn btn-outline-primary btn-block";
+    editCookie.textContent = data.editCookieText
     editCookie.setAttribute("type", "button");
     editCookie.setAttribute("data-toggle", "modal");
     editCookie.setAttribute("data-target", "#modalModifyCookie");
@@ -74,6 +78,7 @@ function writeHTML(data) {
     let submitCookie = document.createElement('button');
     submitCookie.id = "submitCookie";
     submitCookie.className = "btn btn-primary btn-block";
+    submitCookie.textContent = data.submitCookieText
     submitCookie.setAttribute("type", "button");
     submitCookie.setAttribute("onclick", "saveAllAcceptClick()")
 
@@ -101,6 +106,7 @@ function writeHTML(data) {
     let toolTipCookieText = document.createElement('span')
     toolTipCookieText.id = 'toolTipCookieText'
     toolTipCookieText.className = 'tool-tip-cookie-text'
+    toolTipCookieText.textContent = data.modalModifyCookieTitleText
 
     modifyModal.appendChild(imgCookie);
     modifyModal.appendChild(toolTipCookieText)
@@ -133,9 +139,11 @@ function writeHTML(data) {
     let modalModifyCookieTitle = document.createElement('h5');
     modalModifyCookieTitle.id = "modalModifyCookieTitle";
     modalModifyCookieTitle.className = "modal-title mr-3";
+    modalModifyCookieTitle.textContent = data.modalModifyCookieTitleText
     let allAccept = document.createElement('button');
     allAccept.id = "allAccept";
     allAccept.className = "btn btn-primary px-md-3";
+    allAccept.textContent = data.allAcceptText
     allAccept.setAttribute("type", "button");
     allAccept.setAttribute('onclick', "saveAllAcceptClick()")
 
@@ -149,6 +157,7 @@ function writeHTML(data) {
     closeBtn.setAttribute('onclick', "closeModal()")
     let spanClose = document.createElement('span');
     spanClose.id = "closeIcon";
+    spanClose.textContent = "x"
     spanClose.setAttribute("aria-hidden", "true");
 
     closeBtn.appendChild(spanClose);
@@ -183,6 +192,7 @@ function writeHTML(data) {
     let necessaryMore = document.createElement('a')
     necessaryMore.id = "necessaryMoreId"
     necessaryMore.className = 'text-primary ml-1'
+    necessaryMore.textContent = data.showMoreText
     necessaryMore.setAttribute('data-toggle', 'collapse')
     necessaryMore.setAttribute('data-target', '#necessaryMoreMessage')
 
@@ -222,6 +232,7 @@ function writeHTML(data) {
     let analyticsMore = document.createElement('a')
     analyticsMore.id = 'analyticsMoreId'
     analyticsMore.className = 'text-primary ml-1'
+    analyticsMore.textContent = data.showMoreText
     analyticsMore.setAttribute('data-toggle', 'collapse')
     analyticsMore.setAttribute('data-target', '#analyticsMoreMessage')
 
@@ -240,6 +251,7 @@ function writeHTML(data) {
     let saveAccept = document.createElement('button');
     saveAccept.id = "saveAccept";
     saveAccept.className = "btn btn-primary mx-1 px-2";
+    saveAccept.textContent = data.saveAcceptText
     saveAccept.setAttribute("type", "button");
     saveAccept.setAttribute('onclick', "saveAcceptClick()")
 
@@ -311,40 +323,12 @@ function blockAnalytics() {
 
 function unblockAnalytics() {
     if (blackListScripts) {
-        blackListScripts = blackListScripts.map(script => new RegExp(script));
-        blackListScripts.forEach(blackList => {
-            console.log(blackList);
-            window.yett.unblock(blackList)
-        })
+        for (let index = 0; index < blackListScripts.length; index++) {
+            window.yett.unblock(new RegExp(blackListScripts[index].trim()));
+        }
     }
 }
 
-function setDefaultInnerHTML(data) {
-    document.getElementById("messageInCookieBar").innerHTML = `
-    ${data.messageInCookieBarText} 
-    <a id="privacyPolicy" target="_blank"></a>
-    <span id="and" class="ml-1">
-        <a id="cookiePolicy" target="_blank"></a>
-    </span>
-    `;
-    document.getElementById("privacyPolicy").innerHTML = `${data.privacyPolicyText}`;
-    document.getElementById("and").innerHTML =
-        `${data.andText} <a id="cookiePolicy" target="_blank"></a>`;
-    document.getElementById("cookiePolicy").innerHTML = `${data.cookiePolicyText}`;
-    document.getElementById("editCookie").innerHTML = data.editCookieText;
-
-    document.getElementById("submitCookie").innerHTML = data.submitCookieText;
-    document.getElementById("toolTipCookieText").innerHTML = data.modalModifyCookieTitleText
-    document.getElementById("modalModifyCookieTitle").innerHTML = data.modalModifyCookieTitleText;
-
-    document.getElementById("saveAccept").innerHTML = data.saveAcceptText;
-    document.getElementById("allAccept").innerHTML = data.allAcceptText;
-
-    document.getElementById("necessaryMoreId").innerHTML = data.showMoreText;
-    document.getElementById("analyticsMoreId").innerHTML = data.showMoreText;
-    document.getElementById("closeIcon").innerHTML = "&times;";
-
-}
 
 function collapseDescription(data) {
     $('#necessaryMoreId').click(function () {
