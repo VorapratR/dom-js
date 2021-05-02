@@ -5,18 +5,18 @@ var cookies = [
 
 var url = 'http://dev-cookie-consent.dosetech.co/api/cookie/1';
 
-async function getBlockScript(method, url) {
-    return await new Promise(function(resolve, reject) {
+function getBlockScript(method, url) {
+    return new Promise(function (resolve, reject) {
         let xhr = new XMLHttpRequest();
         xhr.open(method, url);
-        xhr.onload = async function() {
+        xhr.onload = function () {
             if (this.status >= 200 && this.status < 300) {
                 var data = JSON.parse(xhr.response);
                 var result = data.detail[0];
                 var arr = [];
-                result.blackListScripts.forEach(element => {
-                    arr.push(new RegExp(element.trim()));
-                });
+                for (let index = 0; index < result.blackListScripts.length; index++) {
+                    arr.push(new RegExp(result.blackListScripts[index].trim()));
+                }
                 resolve(arr);
             } else {
                 reject({
@@ -25,7 +25,7 @@ async function getBlockScript(method, url) {
                 });
             }
         };
-        xhr.onerror = function() {
+        xhr.onerror = function () {
             reject({
                 status: this.status,
                 statusText: xhr.statusText
@@ -35,10 +35,10 @@ async function getBlockScript(method, url) {
     });
 }
 
-async function setBlockScript() {
+function setBlockScript() {
     console.log("--setBlockScript--");
 
-    let result = await getBlockScript("GET", url);
+    let result = getBlockScript("GET", url);
 
     console.log("--result--", result);
 
