@@ -4,8 +4,9 @@ let blackListScripts;
 // ];
 window.onload = function () {
     console.log("--onload--");
+    let webId = document.getElementById('cookie-consent').getAttribute('web-id')
     let request = new XMLHttpRequest();
-    request.open('GET', 'http://dev-cookie-consent.dosetech.co/api/cookie/1', true)
+    request.open('GET', `http://dev-cookie-consent.dosetech.co/api/cookie/${webId}`, true)
     request.onload = function () {
 
         let result = {};
