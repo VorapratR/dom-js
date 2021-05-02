@@ -1,0 +1,9 @@
+{
+    "scriptList": [
+        "google-analytics",
+        "googletagmanager"
+    ],
+    "scriptBlockList": [
+        "www.google-analytics.com"
+    ]
+}

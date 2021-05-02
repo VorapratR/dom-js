@@ -2,11 +2,11 @@ let blackListScripts;
 // window.YETT_BLACKLIST = [
 //     /www\.google-analytics\.com/,
 // ];
-window.onload = async function() {
+window.onload = function () {
     console.log("--onload--");
     let request = new XMLHttpRequest();
     request.open('GET', 'http://dev-cookie-consent.dosetech.co/api/cookie/1', true)
-    request.onload = function() {
+    request.onload = function () {
 
         let result = {};
         let data = JSON.parse(this.response);
@@ -157,7 +157,7 @@ function writeHTML(data) {
 
     let modalBody = document.createElement('div')
     modalBody.className = "px-3"
-        // Strictly Necessary Cookies
+    // Strictly Necessary Cookies
     let modalNecessaryCard = document.createElement('div');
     modalNecessaryCard.className = "card-black";
     let modalNecessaryCardBody = document.createElement('div');
@@ -263,11 +263,11 @@ function saveAcceptClick() {
     let newCookie = " consent-cookie-preference" + '=' + JSON.stringify(dataCookie) + ";"
     if (readCookie('consent-cookie')) {
         document.cookie = newCookie
-            // console.log(document.cookie);
+        // console.log(document.cookie);
     } else {
         document.cookie = "consent-cookie" + "=" + "allows" + ";"
         document.cookie = newCookie
-            // console.log(document.cookie);
+        // console.log(document.cookie);
     }
 
     if (!checkedConsentInApp()) {
@@ -347,13 +347,13 @@ function setDefaultInnerHTML(data) {
 }
 
 function collapseDescription(data) {
-    $('#necessaryMoreId').click(function() {
-        $(this).text(function(i, old) {
+    $('#necessaryMoreId').click(function () {
+        $(this).text(function (i, old) {
             return old.includes(data.showMoreOperator) ? data.showLessText : data.showMoreText;
         });
     });
-    $('#analyticsMoreId').click(function() {
-        $(this).text(function(i, old) {
+    $('#analyticsMoreId').click(function () {
+        $(this).text(function (i, old) {
             return old.includes(data.showMoreOperator) ? data.showLessText : data.showMoreText;
         });
     });
