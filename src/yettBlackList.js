@@ -12,7 +12,7 @@ function getBlockScript(method, url) {
         xhr.onload = function () {
             if (this.status >= 200 && this.status < 300) {
                 var data = JSON.parse(xhr.response);
-                var result = data.detail[0];
+                var result = data.detail;
                 var arr = [];
                 for (let index = 0; index < result.blackListScripts.length; index++) {
                     arr.push(new RegExp(result.blackListScripts[index].trim()));

@@ -12,7 +12,7 @@ window.onload = function () {
         let result = {};
         let data = JSON.parse(this.response);
         if (request.status >= 200 && request.status < 400) {
-            result = data.detail[0]
+            result = data.detail;
             console.log(result.blackListScripts);
             blackListScripts = result.blackListScripts
             writeHTML(result);
